@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/paie/static/src/css/paie.css"/>
+		</xpath>
+</template>
+
+<template id="report_livrep">
+    <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="12"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+            <t t-call="web.basic_layout">
+        <t t-foreach="docs" t-as="o">
+                <div class="page">			 
+			 
+			  <div class="cas">
+							   
+							   <span><strong> Mois de Traitement :  <span t-esc="o.name"/><span /></strong></span><br/>
+							  
+							</div> 
+			 
+			 	</div>
+				
+				
+				<table class="tbordlp" width="100%" style="margin-top:15px">
+				
+							<tr>
+							
+							<th colspan="20"> JOURNAL DE LA PAIE  <span t-esc="o.company_id.name"/></th>
+							
+							</tr>
+							
+                           <tr class="titrecollp">
+                                <th>Matricule</th>
+                                <th>Nom Prénoms</th>
+                                <th>Charges</th>
+                                <th>Date de début de contrat</th>
+                                <th>Emploi occupé</th>
+                                <th>Catégorie</th>
+                                <th>Salaire de base</th>
+                                <th>Prime d'ancienneté</th>
+                                <th>Sursalaire</th>
+                                <th>Indem Log</th>
+                                <th>Indem Trans</th>
+                                <th>Indem Resp</th>
+                                <th>BRUT</th>
+                                <th>CNSS 5,5%</th>
+                                <th>CNSS 16%</th>
+                                <th>TPA</th>
+                                <th>IUTS</th>
+                                <th>Pret/Avance</th>
+                                <th>Mutuelle</th>
+                                <th>Net à Payer</th>
+                            
+                            </tr>
+					
+                        <tbody class="titrevallp">
+                            <t t-set="totsbase" t-value="0" />
+                            <t t-set="totpanc" t-value="0" />
+                            <t t-set="totsursal" t-value="0" />
+                            <t t-set="totindlog" t-value="0" />
+                            <t t-set="totindtrans" t-value="0" />
+                            <t t-set="totindresp" t-value="0" />
+                            <t t-set="totbrut" t-value="0" />
+                            <t t-set="totcnss5" t-value="0" />
+                            <t t-set="totcnss16" t-value="0" />
+                            <t t-set="tottpa" t-value="0" />
+                            <t t-set="totiuts" t-value="0" />
+                            <t t-set="totpret" t-value="0" />
+                            <t t-set="totmut" t-value="0" />
+                            <t t-set="totnet" t-value="0" />
+                            <t t-set="totemp" t-value="0" />
+
+                            <tr t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                <td><span t-esc="line.employee_id.identification_id"/></td>
+                                <td><span t-esc="line.employee_id.name"/></td>
+                                <td><span t-esc="line.employee_id.children"/></td>
+                                <td><span t-esc="line.contract_id.date_start"/></td>
+                                <td><span t-esc="line.employee_id.job_id.name"/></td>
+                                <td><span t-esc="line.contract_id.idcategorie.name"/> <span t-esc="line.contract_id.idechelon.name"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.sbasep).replace(',', ' ')"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.ancp).replace(',', ' ')"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.sursalp).replace(',', ' ')"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.logementp).replace(',', ' ')"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.transportp).replace(',', ' ')"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.fonctionp).replace(',', ' ')"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.brutp).replace(',', ' ')"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.chargesalp).replace(',', ' ')"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.chargepatp).replace(',', ' ')"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.tpa).replace(',', ' ')"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.iutsp).replace(',', ' ')"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.avp+line.pretp).replace(',', ' ')"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.mutp).replace(',', ' ')"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.salnetp).replace(',', ' ')"/></td>
+                            <t t-set="totsbase" t-value="totsbase+round(line.sbasep,0)" />
+                            <t t-set="totpanc" t-value="totpanc+round(line.ancp,0)" />
+                            <t t-set="totsursal" t-value="totsursal+round(line.sursalp,0)" />
+                            <t t-set="totindlog" t-value="totindlog+round(line.logementp,0)" />
+                            <t t-set="totindtrans" t-value="totindtrans+round(line.transportp,0)" />
+                            <t t-set="totindresp" t-value="totindresp+round(line.fonctionp,0)" />
+                            <t t-set="totbrut" t-value="totbrut+round(line.brutp,0)" />
+                            <t t-set="totcnss5" t-value="totcnss5+round(line.chargesalp,0)" />
+                            <t t-set="totcnss16" t-value="totcnss16+round(line.chargepatp,0)" />
+                            <t t-set="tottpa" t-value="tottpa+round(line.tpa,0)" />
+                            <t t-set="totiuts" t-value="totiuts+round(line.iutsp,0)" />
+                            <t t-set="totpret" t-value="totpret+round(line.avp,0)+round(line.pretp,0)" />
+                            <t t-set="totmut" t-value="totmut+round(line.mutp,0)" />
+                            <t t-set="totnet" t-value="totnet+round(line.salnetp,0)" />
+                            <t t-set="totemp" t-value="totemp+1" />
+                            </tr>
+							
+							<tr>
+							
+							<td colspan="5"> <strong>TOTAL </strong></td>
+                            <td align="right"><strong><span t-esc="'{:,.0f}'.format(totemp).replace(',', ' ')"/></strong></td>
+							<td align="right"><strong><span t-esc="'{:,.0f}'.format(totsbase).replace(',', ' ')"/></strong></td>
+							<td align="right"><strong><span t-esc="'{:,.0f}'.format(totpanc).replace(',', ' ')"/></strong></td>
+							<td align="right"><strong><span t-esc="'{:,.0f}'.format(totsursal).replace(',', ' ')"/></strong></td>
+							<td align="right"><strong><span t-esc="'{:,.0f}'.format(totindlog).replace(',', ' ')"/></strong></td>
+							<td align="right"><strong><span t-esc="'{:,.0f}'.format(totindtrans).replace(',', ' ')"/></strong></td>
+							<td align="right"><strong><span t-esc="'{:,.0f}'.format(totindresp).replace(',', ' ')"/></strong></td>
+							<td align="right"><strong><span t-esc="'{:,.0f}'.format(totbrut).replace(',', ' ')"/></strong></td>
+							<td align="right"><strong><span t-esc="'{:,.0f}'.format(totcnss5).replace(',', ' ')"/></strong></td>
+							<td align="right"><strong><span t-esc="'{:,.0f}'.format(totcnss16).replace(',', ' ')"/></strong></td>
+							<td align="right"><strong><span t-esc="'{:,.0f}'.format(tottpa).replace(',', ' ')"/></strong></td>
+							<td align="right"><strong><span t-esc="'{:,.0f}'.format(totiuts).replace(',', ' ')"/></strong></td>
+							<td align="right"><strong><span t-esc="'{:,.0f}'.format(totpret).replace(',', ' ')"/></strong></td>
+							<td align="right"><strong><span t-esc="'{:,.0f}'.format(totmut).replace(',', ' ')"/></strong></td>
+							<td align="right"><strong><span t-esc="'{:,.0f}'.format(totnet).replace(',', ' ')"/></strong></td>
+							</tr> 
+                        </tbody>
+                    </table>
+					 <div class="signature1">
+					 Le Comptable  
+			        </div>			
+					<div class="signature2">
+					 Le Directeur Général 
+			        </div>		
+				
+             </t>    
+    	</t> 
+	</t>              
+</template>
+</odoo>

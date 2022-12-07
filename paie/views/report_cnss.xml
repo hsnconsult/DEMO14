@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+	<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/paie/static/src/css/paie.css"/>
+		</xpath>
+</template>   
+
+            <template id="report_cnsss">
+    <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="12"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.basic_layout">
+                     <div class="page"> 
+                    <div class="landscapehaut">
+                    <div class="landscapehautgauche"> Période de la déclaration
+                    <div class="landscapehautgauchedate1">Du: <span t-field="o.date_start"/></div>
+                    <div class="landscapehautgauchedate2">Au: <span t-field="o.date_end"/></div></div>
+                    <div class="landscapehautmilieu"><u>BORDEREAU NOMINATIF DES TRAVAILLEURS SALARIES</u>   <br/><br/><u>Raison sociale : <span t-esc="o.company_id.name"/></u> </div>
+                    <div class="landscapehautdroite">
+                        <div class="landscapehautdroitefolio">Folio :</div>
+                        <div class="landscapehautdroitenumero">N°</div><div class="landscapehautdroitecases">  
+                        <div class="landscapehautdroitecase_vide"></div><div class="landscapehautdroitecase_vide"></div>
+                            <div class="landscapehautdroitecase_chiffre"><span t-esc="o.company_id.company_registry"/></div><div class="landscapehautdroitecase_lettre"></div> </div></div>
+                    <br class="break"/>
+                    </div>
+                    <div class="tableau_landscape">
+                       <t t-set="totbase" t-value="0"/>
+                       <t t-set="totcnss" t-value="0"/>
+                       <t t-set="numline" t-value="1"/>
+                              <table class="cnsstab">
+                <thead>
+                    <tr>                    
+                        <th rowspan="2">N°</th>
+                        <th class="" rowspan="2">NOM-PRENOMS</th>
+                        <th  width="15%" rowspan="2"><div >N° D'IMMATRICULATION</div><div>C.N.S.S</div></th>
+                        <th width="15%" rowspan="2"><div>RENUMERATIONS</div><div>soumises à côtisations</div></th>
+                        <th width="20%" colspan="2">PERIODE</th>
+                        <th rowspan="2">OBSERVATIONS</th>
+                    </tr>
+                    <tr>                    
+                        <th width="10%">DU: <span t-field="o.date_start"/></th>
+                        <th width="10%">AU: <span t-field="o.date_end"/></th>
+                    </tr>
+                </thead>
+                <tbody class="">
+                      <t t-foreach="o.slip_ids.filtered(lambda oline: oline.bcnss!=0).filtered(lambda oline: oline.employee_id.visa_no!='1')" t-as="oline">
+                       <tr>
+                        <td align="right"><span t-esc="numline"/></td>
+                        <td align="left"><span t-esc="oline.employee_id.name"/></td>
+                        <td align="center"><span t-esc="oline.employee_id.secsoc"/></td>
+                        <td align="right"><span t-esc="'{:,.0f}'.format(oline.bcnss).replace(',', ' ').replace('.', ',')"/></td>
+                        <td align="center">Période</td>
+                        <td align="center">entière</td>
+                        <td></td>
+                       </tr>
+                       <t t-set="numline" t-value="numline+1"/>
+                       <t t-set="totbase" t-value="totbase+oline.bcnss"/>
+                       <t t-set="totcnss" t-value="totcnss+oline.bcnss*21.5/100"/>
+                      </t>
+                       <tr>
+                         <td colspan="2" class="sanstrait"><b>Réf: DR 003</b></td>
+                         <td align="right" class="sanstrait2"><b>TOTAL.....</b></td>
+                         <td align="right"><span t-esc="'{:,.0f}'.format(totbase).replace(',', ' ').replace('.', ',')"/></td>
+                         <td colspan="3" class="sanstrait"></td>                     
+                       </tr>
+                       <tr>
+                         <td colspan="2" class="sanstrait">Certifié exact le :..........</td>
+                         <td align="right" class="sanstrait2"><b>TAUX....</b></td>
+                         <td align="right">21,5%</td>
+                         <td colspan="3" class="sanstrait"></td>                     
+                       </tr>
+                       <tr>
+                         <td colspan="2" class="sanstrait">à..................</td>
+                         <td align="right" class="sanstrait2"><b>COTISATIONS..</b></td>
+                         <td align="right"><span t-esc="'{:,.0f}'.format(totcnss).replace(',', ' ').replace('.', ',')"/></td>
+                         <td colspan="3" class="sanstrait"></td>                     
+                       </tr>
+                       <tr>
+                         <td colspan="3" class="sanstrait">Signature et cachet</td>    
+                         <td colspan="4" class="sanstrait"></td>                  
+                       </tr>
+                </tbody>
+            </table></div> 
+
+                  <div class="datecnss" >Date <span t-field="o.date_end"/></div>
+                  <div class="cnsignature1" >
+
+              <u></u>
+                  </div>
+                  <div class="cnsignature2" >
+          Le Directeur <br/><br/><br/><br/>
+<u>Inoussa MAIGA</u>
+
+                  </div>
+                
+                               
+                        </div>
+                    </t>
+                </t>
+                    </t>
+            </template>
+
+<template id="external_layout_footer">
+    <div class="footer">
+                  <div class="baspage" >Odoo Paye
+                  </div>
+    </div>      
+</template>
+    </odoo>
+        

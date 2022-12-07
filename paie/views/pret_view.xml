@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+       <record id="view_paie_hr_employee_form" model="ir.ui.view">
+            <field name="name">Pretemp.ext</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+				<xpath expr="//page[@name='hr_settings']" position="after">
+				    <page string="PRETS">
+					      <field name="pret" nolabel="1">
+                                <tree string="pret">
+									<field name="dateprem" />
+									<field name="dateder" />
+									<field name="nbech" />
+									<field name="taux" />
+									<field name="montant"/>
+									<field name="traite" />
+									<field name="montantdu"/>
+                                    <field name="rembourse"/>
+								    <field name="rap"/>
+                                    <field name="state"/>
+                              </tree>
+							  </field>
+					</page>
+				    <page string="PRETS">
+					      <field name="pretsimp" nolabel="1">
+                                <tree string="pret" editable="bottom">
+									<field name="objet" />
+									<field name="type" />
+									<field name="date" />
+									<field name="montant"/>
+									<field name="traite" />
+                                    <field name="rembourse"/>
+								    <field name="rap"/>
+								    <field name="state"/>
+                              </tree>
+							  </field>
+					</page>
+                </xpath>
+                                  
+            </field>
+        </record>
+
+        <record id="paie_categorie_form" model="ir.ui.view">
+	         <field name="name">paie.categorie.form</field>
+             <field name="model">paie.categorie</field>
+             <field name="arch" type="xml">
+	         <form string="categories" version="7.0">
+                <sheet>
+                       <group>
+                        <group>
+							<field name="name" />
+							<field name="indlog" />
+							<field name="indtrans" />
+                        </group>
+                       </group>
+                </sheet>
+                </form>
+				</field>
+	     </record>	
+	  <record id="paie_categorie_tree" model="ir.ui.view">
+            <field name="name">paie.categorie.tree</field>
+            <field name="model">paie.categorie</field>
+            <field name="arch" type="xml">
+                <tree string="categories">
+							<field name="name" />
+							<field name="indlog" />
+							<field name="indtrans" />
+                </tree>
+            </field>
+        </record>
+		<record id="paie_categorie_search" model="ir.ui.view">
+            <field name="name">paie.categorie.search</field>
+            <field name="model">paie.categorie</field>
+            <field name="arch" type="xml">
+                <search string="categorie">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+<record model="ir.actions.act_window" id="action_paie_categorie">
+      <field name="name">categorie</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">paie.categorie</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="paie_categorie_tree"/>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          Cliquer ici pour ajouter une categorie.
+        </p>
+      </field>
+    </record>
+
+        <record id="paie_echelon_form" model="ir.ui.view">
+	         <field name="name">paie.echelon.form</field>
+             <field name="model">paie.echelon</field>
+             <field name="arch" type="xml">
+	         <form string="echelons" version="7.0">
+                <sheet>
+                       <group>
+                        <group>
+							<field name="name" />
+                        </group>
+                       </group>
+                </sheet>
+                </form>
+				</field>
+	     </record>	
+	  <record id="paie_echelon_tree" model="ir.ui.view">
+            <field name="name">paie.echelon.tree</field>
+            <field name="model">paie.echelon</field>
+            <field name="arch" type="xml">
+                <tree string="echelons">
+							<field name="name" />
+                </tree>
+            </field>
+        </record>
+		<record id="paie_echelon_search" model="ir.ui.view">
+            <field name="name">paie.echelon.search</field>
+            <field name="model">paie.echelon</field>
+            <field name="arch" type="xml">
+                <search string="echelon">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+<record model="ir.actions.act_window" id="action_paie_echelon">
+      <field name="name">echelon</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">paie.echelon</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="paie_echelon_tree"/>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          Cliquer ici pour ajouter un echelon.
+        </p>
+      </field>
+    </record>
+
+        <record id="paie_grillemere_form" model="ir.ui.view">
+	         <field name="name">paie.grillemere.form</field>
+             <field name="model">paie.grillemere</field>
+             <field name="arch" type="xml">
+	         <form string="grilles" version="7.0">
+                <sheet>
+                       <group>
+                        <group>
+							<field name="name" />
+                        </group>
+                       </group>
+                   <notebook>
+				    <page string="Elements de la grille">
+					      <field name="ligne_grille" nolabel="1">
+                                <tree string="grille">
+									<field name="categorie" />
+									<field name="echelon" />
+									<field name="salaire" />
+									<field name="name" />
+                              </tree>
+							  </field>
+					</page>
+                   </notebook>
+                </sheet>
+                </form>
+				</field>
+	     </record>	
+	  <record id="paie_grillemere_tree" model="ir.ui.view">
+            <field name="name">paie.grillemere.tree</field>
+            <field name="model">paie.grillemere</field>
+            <field name="arch" type="xml">
+                <tree string="grilles">
+							<field name="name" />
+                </tree>
+            </field>
+        </record>
+		<record id="paie_grillemere_search" model="ir.ui.view">
+            <field name="name">paie.grillemere.search</field>
+            <field name="model">paie.grillemere</field>
+            <field name="arch" type="xml">
+                <search string="grille">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+<record model="ir.actions.act_window" id="action_paie_grillemere">
+      <field name="name">Grille</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">paie.grillemere</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="paie_grillemere_tree"/>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          Cliquer ici pour ajouter une grille.
+        </p>
+      </field>
+    </record>
+
+
+       <record id="paie_pret_form" model="ir.ui.view">
+            <field name="name">paie.pret.form</field>
+            <field name="model">paie.pret</field>
+            <field name="arch" type="xml">
+	         <form string="Pret">
+                      <header>
+					    <button name="gentab" string="Générer tableau" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=','brouillon')]}"/>
+					    <button name="valider" string="Valider" type="object" class="btn-primary" attrs="{'invisible': ['|',('state', '!=','brouillon'),('employee_id','=',False)]}"/>
+<button name="cloturer" string="Cloturer" type="object" class="btn-primary" attrs="{'invisible': ['|',('state', '!=','encours'),('employee_id','=',False)]}"/>
+                        <field name="state" widget="statusbar" visible="brouillon,encours,cloture"/>
+                      </header>
+                      <sheet>
+                               <group>
+                                    <group>
+                                        <field name="employee_id" invisible="1"/>
+                                        <field name="date"/>
+                                        <field name="type"/>
+										<field name="nbech"/>
+                                        <field name="dateprem"/>
+                                        <field name="dateder"/>
+										<field name="taux"/>
+                                    </group>
+									<group>
+                                        <field name="montant"/>
+                                        <field name="caprest"/>
+                                        <field name="traite"/>
+										<field name="montantdu"/>
+                                        <field name="rembourse"/>
+										<field name="rap"/>
+                                    </group>
+                                </group>
+                       <notebook>
+                        <page string="TABLEAU">
+                            <field name="ligne_tableaupret" nolabel="1">
+                                <tree string="tableau" editable="bottom" decoration-success="state == 'paye'">
+									<field name="numech" />
+									<field name="dateech" />
+									<field name="capdu" />
+									<field name="intdu" />
+									<field name="montantech" />
+									<field name="caprest" />
+									<field name="montantremb" invisible="1"/>
+									<field name="ref" />
+                                    <field name="state" />
+                                </tree>
+						 </field>
+                        </page>
+                    </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <menuitem id="menu_paie_parametre_grille" name="Grilles" parent = "hr_work_entry_contract.menu_hr_payroll_configuration" sequence="40" action="action_paie_grillemere"/>
+    <menuitem id="menu_paie_parametre_categorie" name="Catégories" parent = "hr_work_entry_contract.menu_hr_payroll_configuration" sequence="41" action="action_paie_categorie"/>
+    <menuitem id="menu_paie_parametre_echelon" name="Echelons" parent = "hr_work_entry_contract.menu_hr_payroll_configuration" sequence="42" action="action_paie_echelon"/>
+
+
+
+	 </data>
+</openerp>

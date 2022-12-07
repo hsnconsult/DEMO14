@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_hr_contract_3_form" model="ir.ui.view">
+            <field name="name">Contract3.ext</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+<xpath expr="//group[@name='salary_and_advantages']" position="before">
+                       <group>
+                       <group>
+                                         <field name="idcategorie"/>
+                                         <field name="idechelon"/> 
+                                         <field name="typeemp"/> 
+                       </group>
+                       </group>
+                </xpath>  
+                 <xpath expr="//group[@name='salary_and_advantages']" position="after">  
+                        <group string="Indemnites" name="indemnites">        
+                                         <field name="wage"/>                        
+                                         <field name="sursal"/>
+                                         <field name="indlog"/>
+                                         <field name="indfonc"/>
+                                         <field name="indtrans"/>
+                                         <field name="mutuelle"/>
+                                         <field name="indcai" invisible="1"/>
+                                         <field name="indpou" invisible="1"/>
+                                         <field name="indsuj" invisible="1"/>
+                                         <field name="indresp" invisible="1"/>
+                                         <field name="indsal" invisible="1"/>
+                                         <field name="indfor"/>
+                                         <field name="indast" invisible="1"/>
+                       </group>
+                </xpath>    
+                 <xpath expr="//group[@name='salary_and_advantages']" position="replace"/>
+				<xpath expr="//page[2]" position="after">  
+                                     <page string="Initialisation de la paie">   
+                                      <group> 
+                                        <group>                            
+                                                 <field name="bruti"/> 
+                                                 <field name="neti"/>                       
+                                                 <field name="chargesali"/> 
+                                                 <field name="chargepati"/>
+                                                 <field name="heureti"/>
+                                                 <field name="heuresupi"/>
+                                                 <field name="congeaci"/>
+                                                 <field name="congepi"/>
+                                        </group>
+                                      </group>       
+                                     </page>
+               </xpath>                     
+            </field>
+        </record>
+
+       <record id="view_petro_hr_payslip_form" model="ir.ui.view">
+            <field name="name">Payroll.ext</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='name']" position="after">
+                                <field name="ancannee"/>
+                                <field name="ancmois"/>
+                </xpath>
+               <xpath expr="//field[@name='number']" position="after">
+                                <field name="datep"/>
+                                <field name="modep"/>
+                </xpath>
+
+				<xpath expr="//page[3]" position="after">  
+                                     <page string="Résumé">   
+                                      <group> 
+                                        <group>                            
+                                                 <field name="brutp"/> 
+                                                 <field name="netp"/>                       
+                                                 <field name="chargesalp"/> 
+                                                 <field name="chargepatp"/>
+                                                 <field name="heuretp"/>
+                                                 <field name="heuresupp"/>
+                                                 <field name="congeacp"/>
+                                                 <field name="congepp"/>
+                                                 <field name="congerestp"/>
+                                        </group>
+                                        <group>                            
+                                                 <field name="bruta"/> 
+                                                 <field name="neta"/>                       
+                                                 <field name="chargesala"/> 
+                                                 <field name="chargepata"/>
+                                                 <field name="heureta"/>
+                                                 <field name="heuresupa"/>
+                                                 <field name="congeaca"/>
+                                                 <field name="congepa"/>
+                                                 <field name="congeresta"/>
+                                        </group>
+                                      </group>       
+                                     </page>
+               </xpath>  
+            </field>
+        </record>
+       <record id="view_petro_hr_salary_rule_form" model="ir.ui.view">
+            <field name="name">Payrolll.ext</field>
+            <field name="model">hr.salary.rule</field>
+            <field name="inherit_id" ref="hr_payroll.hr_salary_rule_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='active']" position="after">
+                                <field name="ref"/>
+                </xpath>
+            </field>
+        </record>
+       <record id="view_petro_hr_salary_structure_form" model="ir.ui.view">
+            <field name="name">Payrolllstruct.ext</field>
+            <field name="model">hr.payroll.structure</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_employee_grade_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='name']" position="after">
+                                <field name="tauxa"/>
+                </xpath>
+            </field>
+        </record>
+       <record id="view_petro_hr_employee_form" model="ir.ui.view">
+            <field name="name">Payrollemp.ext</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='job_id']" position="after">
+                                <field name="ordre"/>
+                                <field name="categorie"/>
+                                <field name="echelon"/>
+                                <field name="secsoc"/>
+                </xpath>
+               <xpath expr="//field[@name='category_ids']" position="replace">
+                                <field name="title"/>
+                </xpath>
+               <xpath expr="//field[@name='user_id']" position="after">
+                                <field name="partner_id"/>
+                </xpath>
+				<xpath expr="//page[@name='hr_settings']" position="after">
+				    <page string="BANQUE">
+                                <group>
+                                    <group string="Compte bancaire" name="active_group">
+                                        <field name="idbanque"/>
+                                        <field name="codeb"/>
+										<field name="codeg"/>
+										<field name="compteb"/>
+										<field name="rib"/>
+										<field name="modep"/>
+                                    </group>
+                                </group>
+					</page>
+</xpath>
+            </field>
+        </record>
+       <record id="view_petro_hr_paysliprun_form" model="ir.ui.view">
+            <field name="name">Payrollrun.ext</field>
+            <field name="model">hr.payslip.run</field>
+            <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
+            <field name="arch" type="xml">
+
+                 <xpath expr="//button[@name='action_draft']" position="after"> 
+                     <button name="calcule_feuille" type="object"  string="Calculer les feuilles"/>
+                     <button name="comptabiliser" type="object"  string="Comptabiliser" attrs="{'invisible': [('compta', '!=', False)]}"/>
+		     <button name="brouillon" type="object"  string="Brouillon"/>
+                </xpath> 
+                <field name="credit_note" position="after">
+                        <field name="compta" readonly="1"/>
+                        <field name="move_id"/>
+                </field>
+				
+                 <xpath expr="//group[1]" position="after"> 
+                <notebook>
+				     <page string="Comptabilité">
+					 <group>
+					 <group>
+                         <field name="sbase"/>
+                         <field name="panc"/>
+                         <field name="sursal"/>
+                         <field name="indfonc"/>
+                         <field name="indtrans"/>
+                         <field name="indlog"/>
+                         <field name="indfor"/>
+                         <field name="cnssemp"/>
+                         <field name="cnsspat"/>
+                         <field name="tpa"/>
+						 <field name="iuts"/>
+                         <field name="pret"/>
+                         <field name="mut"/>
+                         <field name="av"/>
+                         <field name="salnet"/>
+					 </group>
+					 </group>
+                </page>
+				    <page string="Absences">
+					      <field name="ligne_absence" nolabel="1">
+                                <tree string="absence" editable="bottom">
+									<field name="idemploye" />
+									<field name="nbjabsence" />
+									<field name="nbjtravail" />
+                              </tree>
+							  </field>
+					</page>
+                </notebook>
+                </xpath>
+            </field>
+        </record>
+
+       <record id="view_paye_company_form" model="ir.ui.view">
+            <field name="name">Companyrh.ext</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[1]" position="after">
+                    <page string="Comptabilité paie">  
+			           <group>                               
+                         <field name="journalpaie"/>
+                         <field name="sbase"/>
+                         <field name="panc"/>
+                         <field name="sursal"/>
+                         <field name="indfonc"/>
+                         <field name="indtrans"/>
+                         <field name="indlog"/>
+			 <field name="cnss"/>
+                         <field name="indfor"/>
+                         <field name="cnsspat"/>
+						 <field name="tpac"/>
+                         <field name="tpad"/>
+						 <field name="iuts"/>
+                         <field name="pret"/>
+                         <field name="mut"/>
+                         <field name="av"/>
+                         <field name="salnet"/>
+			           </group>   
+                    </page>      
+                </xpath>
+            </field>
+        </record>
+	 </data>
+</openerp>

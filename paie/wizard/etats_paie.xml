@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_cnss_wizard" model="ir.ui.view">
+            <field name="name">cnss.wizard.form</field>
+            <field name="model">cnss.wizard</field>
+            <field name="arch" type="xml">
+                <form string="CNSS">
+				    <group>
+                    <group>
+                        <field name="mois1"/>
+						<field name="mois2"/>
+						<field name="mois3"/>
+						<field name="debut"/>
+						<field name="fin"/>
+                    </group>
+					</group>
+                    <footer>
+                        <button name="generate_report" string="Imprimer" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_cnss" model="ir.actions.act_window">
+            <field name="name">CNSS</field>
+            <field name="res_model">cnss.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+<!--<menuitem id="menu_paie_report" name="ETATS"  parent="hr_payroll.menu_hr_payroll_root" sequence="25"/>
+<menuitem id="menu_paie_report_cnss" name="CNSS" action="action_cnss" parent="menu_paie_report" sequence="5"/>-->
+</odoo>

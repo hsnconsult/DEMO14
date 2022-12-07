@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_paie_pret_gerant,paie.paie_pret.gerant,model_paie_pret,group_paie_gerant,1,1,1,1
+access_paie_grillemere_gerant,paie.paie_grillemere.gerant,model_paie_grillemere,group_paie_gerant,1,1,1,1
+access_paie_grille_gerant,paie.paie_grille.gerant,model_paie_grille,group_paie_gerant,1,1,1,1
+access_paie_tableaupret_gerant,paie.paie_tableaupret.gerant,model_paie_tableaupret,group_paie_gerant,1,1,1,1
+access_paie_absence_gerant,paie.paie_absence.gerant,model_paie_absence,group_paie_gerant,1,1,1,1
+access_paie_echelon_gerant,paie.paie_echelon.gerant,model_paie_echelon,group_paie_gerant,1,1,1,1
+access_paie_categorie_gerant,paie.paie_categorie.gerant,model_paie_categorie,group_paie_gerant,1,1,1,1
+access_paie_pretsimp_gerant,paie.paie_pretsimp.gerant,model_paie_pretsimp,group_paie_gerant,1,1,1,1

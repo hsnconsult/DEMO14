@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/paie/static/src/css/paie.css"/>
+		</xpath>
+</template>
+<template id="report_ordre">
+    <t t-call="web.html_container">
+         <t t-call="web.internal_layout">
+        <t t-foreach="docs" t-as="o">
+                <t t-set="totsiege" t-value="0"/>
+                <div class="page">
+                    <div>
+                    	<div class="infosgo">
+                    <img t-att-src="'/paie/static/src/img/logolivre.png'" />
+                    	</div> 
+						<div class="infosdo">
+                           <h3>ORDRES DE PAIEMENT</h3><br/>
+                           Période: <strong><span t-esc="o.name"/></strong><br/>
+                           Du: <strong><span t-esc="o.date_start" t-esc-options='{"widget": "date"}'/></strong> Au: <strong><span t-esc="o.date_end" t-esc-options='{"widget": "date"}'/></strong><br/>
+                    	</div>
+                    </div>
+                    <table class="trub" width="100%">
+                            <tr>
+                               <td align="center"><strong>Numéro</strong></td>
+                               <td align="center"><strong>Nom du salarié</strong></td>
+                               <td align="center"><strong>Date de paiement</strong></td>
+                               <td align="center"><strong>Net à payer</strong></td>
+                               <td align="center"><strong>N° Compte bancaire</strong></td>
+                               <td align="center"><strong>Signature</strong></td>
+                           </tr>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0).sorted(key=lambda line: int(line.employee_id.identification_id))" t-as="line">
+                            <tr>
+                                 <td align="center"><span t-esc="line.employee_id.identification_id"/></td>
+                                 <td><span t-esc="line.employee_id.name"/></td>
+                                 <td><span t-esc="line.payslip_run_id.date_end" t-esc-options='{"widget": "date"}'/></td>
+                                 <td align="right"><span t-esc="'{:,.0f}'.format(line.salnetp).replace(',', ' ').replace('.', ',')"/></td>
+                                 <td></td>
+                                 <td></td>
+                            </tr>
+                <t t-set="totsiege" t-value="totsiege+line.salnetp"/>
+          					   </t>
+                            <tr class="grisc">
+                                 <td colspan="3">TOTAL</td>
+                                 <td align="right"><span t-esc="'{:,.0f}'.format(totsiege).replace(',', ' ').replace('.', ',')"/></td>
+                                 <td></td>
+                                 <td></td>
+                            </tr>
+                     </table>
+                </div>
+          </t>
+        </t>
+    </t>
+</template>
+</odoo>

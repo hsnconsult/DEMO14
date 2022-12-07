@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/paie/static/src/css/paie.css"/>
+		</xpath>
+</template>
+
+<template id="report_billetage">
+    <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="12"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+            <t t-call="web.basic_layout">
+        <t t-foreach="docs" t-as="o">
+                <div class="page">			 
+			 	</div>					
+				<div class="titrev"> ETAT DE BILLETAGE <span t-esc="o.name"/></div>
+				<table class="tbordv" style="margin-top:15px">
+                            <tr>
+                                <th>MATRICULE</th>
+                                <th>NOM ET PRENOM(S)</th>
+                                <th>EMPLOI OCCUPE</th>
+                                <th>NET A PAYER</th>
+                            </tr>					
+                        <tbody class="titreval">
+                            <t t-set="totnet" t-value="0" />
+                            <t t-set="totemp" t-value="0" />
+                            <tr t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0).filtered(lambda line: line.modep=='Espèces').sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                <td align="right"><span t-esc="line.employee_id.identification_id"/></td>
+                                <td><span t-esc="line.employee_id.name"/></td>
+								<td><span t-esc="line.contract_id.job_id.name"/></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.salnetp).replace(',', ' ')"/></td>
+                                <t t-set ="totnet" t-value="totnet+round(line.salnetp,0)" />
+                                <t t-set="totemp" t-value="totemp+1" />
+                            </tr>
+							
+							<tr>
+							
+							<td><span t-esc="totemp"/></td>
+							<td></td>
+							<td></td>
+							<td align="right"><strong><span t-esc="'{:,.0f}'.format(totnet).replace(',', ' ')"/></strong></td>
+							</tr> 
+                        </tbody>
+                    </table>
+					 <div class="signdrh">
+							    <br/>
+							   <br/><br/><br/>
+                               
+			        </div>		
+					 <div class="signdfc">
+							   <br/><br/><br/><br/>
+                              
+			        </div>		
+					 <div class="signdg">
+							    <br/>Le Directeur<br/><br/><br/><br/>
+                               Insoussa MAIGA
+			        </div>	
+				
+				
+             </t>    
+    	</t> 
+	</t>              
+</template>
+</odoo>

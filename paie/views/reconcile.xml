@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+<t t-extend="account.reconciliation.line.create">
+    <t t-jquery="table" t-operation="append">
+        <tr class="create_date_p">
+            <td class="o_td_label">Date</td>
+            <td class="o_td_field"></td>
+        </tr>
+    </t>
+</t>
+</templates>

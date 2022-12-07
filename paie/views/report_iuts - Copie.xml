@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/paie/static/src/css/paie.css"/>
+		</xpath>
+</template>
+			 
+			 
+			 
+			 
+<template id="report_iuts">
+    <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="12"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.basic_layout">
+			<header>
+			<div>
+			 <div class="infosclig">
+			 
+           
+                        	    <span class="souligner" > <h3>BURKINA FASO</h3></span>
+						   <div class="contenug">
+							   <strong> MINISTERE DE L'ECONOMIE </strong><br/>
+							   <span class="souligner" ><strong> ET DES FINANCES</strong></span><br/>
+							   <strong> DIRECTION GENERALE <br/>DES IMPOTS</strong><br/>
+						   </div>
+              </div>
+						
+				<div class="RELEVED">
+			 
+           
+                           <h3 class="txt">RELEVE DETAILLE</h3>
+						   	<div class="contenud">
+							   <strong> - du versement des retenues de L'IMPOT UNIQUE <strong>SUR LES TRAITEMENTS ET SALAIRES (IUTS)</strong></strong><br/>
+							   <strong> - et du versement de la TAXE PATRONALE ET D'APPRENTISSAGE (TPA)</strong><br/>
+							 
+                    	</div>
+				</div>
+			</div>
+			
+			</header>
+			    
+			 
+			
+			 
+			 
+			
+                <div class="page">
+                    <div> <br/><br/><br/><br/><br/>
+					
+					
+					<div class="iu">
+						 <h5 align="center">DESIGNATION DE LA PARTIE VERSANTE</h5>
+						   <strong align="center" >(Non Clôturé ) N° IFU: <span> </span> </strong>
+					</div><br/><br/><br/><br/>
+					
+						<div class="iu">
+						 <h5 align="center">IMPOT UNIQUE SUR LES TRAITEMENTS ET SALAIRES / TAXE PATRONALE D'APPRENTISSAGE</h5>
+						   <strong align="center" >Période du :  <span> </span> </strong>
+						</div>
+                          
+                    </div> <br/><br/><br/>
+                    <table class="tbord" width="100%" style="margin-top:15px">
+                            <tr>
+                                <th>N°</th>
+                                <th>Nom  prénoms</th>
+                                <th>Salaire imposable</th>
+                                <th>Taux TPA</th>
+                                <th>Total imposable</th>
+                                <th>Charges</th>
+								<th>TPA dû</th>
+								<th>IUTS dû</th>
+                            </tr>
+                        <tbody class="titreval">
+                            <t t-set="totbase" t-value="0" />
+                            <t t-set="tottpa" t-value="0" />
+                            <t t-set="totiuts" t-value="0" />
+                            <tr t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0).sorted(key=lambda line: line.employee_id.name)" t-as="line">
+                                <td><span t-esc="line.employee_id.identification_id"/></td>
+                                <td><span t-esc="line.employee_id.name"/></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.brutp).replace(',', ' ')"/></td>
+                                <td align="right">3%</td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.brutp).replace(',', ' ')"/></td>
+                                <td align="right"><span t-esc="line.employee_id.children"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.tpa).replace(',', ' ')"/></td>
+								<td align="right"><span t-esc="'{:,.0f}'.format(line.iuts).replace(',', ' ')"/></td>
+                                <t t-set ="totbase" t-value="totbase+round(line.brutp,0)" />
+                                <t t-set ="tottpa" t-value="tottpa+round(line.tpa,0)" />
+                                <t t-set ="totiuts" t-value="totiuts+round(line.iuts,0)" />
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><strong>TOTAL:</strong></td>
+                                <td align="right"><strong><span t-esc="'{:,.0f}'.format(totbase).replace(',', ' ')"/></strong></td>
+                                <td align="right"><strong></strong></td>
+                                <td align="right"><strong><span t-esc="'{:,.0f}'.format(totbase).replace(',', ' ')"/></strong></td>
+                                <td align="right"></td>
+								<td align="right"><strong><span t-esc="'{:,.0f}'.format(tottpa).replace(',', ' ')"/></strong></td>
+								<td align="right"><strong><span t-esc="'{:,.0f}'.format(totiuts).replace(',', ' ')"/></strong></td>
+                            </tr>
+							
+							<tr>
+							
+							 <td colspan="2">TOTAL IUTS</td>
+							  <td> </td>
+							  <td> </td>
+							  <td> </td>
+							  <td> </td>
+							  <td> </td>
+							  <td> </td>
+							 
+							</tr>
+							<tr>
+							    
+                                <td colspan="7">TOTAL GENERAL</td>
+                                <td align="right"><strong><span t-esc="'{:,.0f}'.format(tottpa+totiuts).replace(',', ' ')"/></strong></td>
+							</tr>
+                        </tbody>
+                    </table><br/><br/><br/><br/><br/><br/><br/><br/>
+					
+					<div class="tic" >
+						<strong> Avis d'imposition N°: <span> </span> </strong><br/><br/><br/>
+						<strong>A Ouagadougou, le <span> </span> </strong>
+					</div>
+					
+					
+					
+                </div>
+          </t>
+        </t>
+    </t>
+</template>
+</odoo>

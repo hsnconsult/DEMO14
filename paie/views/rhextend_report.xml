@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QWeb Reports -->
+<record id="paysage" model="report.paperformat">
+    <field name="name">A4 Paysage</field>
+    <field name="default" eval="True"/>
+    <field name="format">custom</field>
+    <field name="page_height">297</field>
+    <field name="page_width">210</field>
+    <field name="orientation">Landscape</field>
+    <field name="margin_top">40</field>
+    <field name="margin_bottom">23</field>
+    <field name="margin_left">7</field>
+    <field name="margin_right">7</field>
+    <field name="header_line" eval="False"/>
+    <field name="header_spacing">3</field>
+    <field name="dpi">80</field>
+</record>
+        <report 
+            id="action_report_iuts"
+            model="hr.employee"
+            string="Etat IUTS"
+            report_type="qweb-html"
+            name="rhextend.report_iuts"
+            file="rhextend.rhe_iuts"
+            />
+        <report 
+            id="action_report_cnss"
+            model="hr.employee"
+            string="Etat CNSS"
+            report_type="qweb-html"
+            name="rhextend.report_cnss"
+            file="rhextend.report_cnss"
+            />
+        <report 
+            id="action_report_rubsal"
+            model="hr.employee"
+            string="Salaire par rubrique"
+            report_type="qweb-html"
+            name="rhextend.report_rubsal"
+            file="rhextend.report_rubsal"
+            paperformat = "rhextend.paysage"
+            />
+        <report 
+            id="action_report_virement"
+            model="hr.employee"
+            string="Ordre de virement"
+            report_type="qweb-html"
+            name="rhextend.report_virement"
+            file="rhextend.report_virement"
+            />
+        <report 
+            id="action_report_payslipeco" 
+            model="hr.payslip" 
+            string="Bulletin format Eco oil"
+            report_type="qweb-pdf"
+            name="rhextend.report_payslipeco" 
+            file="rhextend.report_payslipeco"
+        />
+    </data>
+</odoo>

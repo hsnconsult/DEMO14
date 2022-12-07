@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/rhextend/static/src/css/rhextend.css"/>
+		</xpath>
+</template>
+
+<template id="report_virement">
+    <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="12"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+            <t t-call="web.basic_layout">
+        <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <img t-att-src="'/rhextend/static/src/img/logo.png'" />
+                    <p><div style="width:50%; float:right" class="dest">
+                     <strong>
+                     <p>A</p>
+                     <p>Monsieur Le Directeur Général</p>
+                     <p>De <span t-esc="banque"/> </p>
+                     </strong>
+                     <p>Ouagadougou le <span t-esc="data['dateordre']" t-esc-options='{"widget": "date"}'/> </p>
+                    </div></p>
+                    <p><div style="width:100%; float:left" class="dest">
+                     <p><strong>Objet:</strong> virement de salaire</p>
+                     <p>Monsieur,</p>
+                     <p>Par le débit de notre compte numero <span t-esc="compte"/> ouvert dans vos livres, nous vous demandons de virer avec valeur les salaires du mois de <span t-esc="data['lot_id'][1]"/> au profit 
+                           des employés ci-dessous cités dans leurs comptes respectifs: </p>
+                    </div></p>
+						<table class="table table-bordered">
+                          <thead class="titrecolv">
+  							<tr>
+							    <td>NOMS  PRENOMS</td>
+							    <td>Code Guichet</td>
+							    <td>BANQUE</td>
+							    <td>Numéro de compte</td>
+							    <td>Clé RIB</td>
+							    <td>MONTANT</td>
+							</tr>
+                          </thead>
+                         <tbody class="postev table-line">
+                          <t t-foreach="vlines" t-as="iline">
+                            <tr>
+                                <td><span t-esc="iline['employe']"/></td>
+                                <td><span t-esc="iline['cgui']"/></td>
+                                <td><span  t-esc="iline['banque']"/></td>
+                                <td><strong>
+<span  t-esc="iline['acc_number']"/></strong>
+</td>
+                                <td><strong>
+<span t-esc="iline['rib']"/></strong>
+</td>
+                                <td align="right"><strong>
+<span t-esc="'{:,.0f}'.format(iline['amount']).replace(',', ' ').replace('.', ',')"/></strong>
+</td>
+							</tr>
+                          </t>
+                         </tbody>
+						</table>
+                     <div class="dest"><p>Arrêté le présent virement à la somme de <span t-esc="vtotlettre" style="color:#800000"/><br /><span style="color:#800000">  (<span t-esc="'{:,.0f}'.format(vtot).replace(',', ' ').replace('.', ',')"/>) Francs CFA</span></p>
+                     <p>Veuillez agréer Monsieur, l'expression de nos salutations distinguées.</p>
+                     <p align="right">La Direction ECO OIL BURKINA</p>
+                     </div>
+                </div>
+        </t>
+        </t>
+    </t>
+</template>
+</odoo>

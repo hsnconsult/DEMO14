@@ -1,0 +1,532 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/paie/static/src/css/paie.css"/>
+		</xpath>
+</template>
+<template id="report_salarie">
+    <t t-call="web.html_container">
+         <t t-call="web.internal_layout">
+        <t t-foreach="docs" t-as="o">
+
+                <t t-set="totsbasep" t-value="0"/>
+                <t t-set="totancp" t-value="0"/>
+                <t t-set="totsursalp" t-value="0"/>
+                <t t-set="tothsup15p" t-value="0"/>
+                <t t-set="tothsup35p" t-value="0"/>
+                <t t-set="tothsup50p" t-value="0"/>
+                <t t-set="tothsup60p" t-value="0"/>
+                <t t-set="tothsup120p" t-value="0"/>
+                <t t-set="totlogementp" t-value="0"/>
+                <t t-set="totfonctionp" t-value="0"/>
+                <t t-set="tottransportp" t-value="0"/>
+                <t t-set="totcaissep" t-value="0"/>
+                <t t-set="totbrutp" t-value="0"/>
+                <t t-set="totchargepatp" t-value="0"/>
+                <t t-set="totsalip" t-value="0"/>
+                <t t-set="totavielp" t-value="0"/>
+                <t t-set="totiutsp" t-value="0"/>
+                <t t-set="totavp" t-value="0"/>
+                <t t-set="totpretp" t-value="0"/>
+                <t t-set="totbiutsp" t-value="0"/>
+                <t t-set="totsalnetp" t-value="0"/>
+                <t t-set="totcouttotp" t-value="0"/>
+                <t t-set="totcongepayep" t-value="0"/>
+                <t t-set="totsursalp" t-value="0"/>
+                <t t-set="totretenup" t-value="0"/>
+                <div class="page">
+                    <div>
+                    	<div class="infosgr">
+                    <img t-att-src="'/paie/static/src/img/logolivre.png'" />
+                    	</div> 
+						<div class="infosdr">
+                           <h1>LIVRE DE PAIE</h1><br/>
+                           Période: <strong><span t-esc="o.name"/></strong><br/>
+                           Du: <strong><span t-esc="o.date_start" t-esc-options='{"widget": "date"}'/></strong> Au: <strong><span t-esc="o.date_end" t-esc-options='{"widget": "date"}'/></strong><br/>
+                    	</div>
+                    </div>
+                <div class="rubriques">
+                    <table class="trub" width="100%">
+                            <tr>
+                               <td align="center" class="rub"><strong>Rubrique</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="center" class="emp">
+                                  <strong><span t-esc="line.employee_id.ordre"/></strong><br/>
+                                  <strong><span t-esc="line.employee_id.name"/></strong>
+                                 </td>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Salaire de base</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.sbasep).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totsbasep" t-value="totsbasep+round(line.sbasep,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Ancienneté</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.ancp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totancp" t-value="totancp+round(line.ancp,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Sursalaire</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.sursalp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totsursalp" t-value="totsursalp+round(line.sursalp,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Heure supplémentaire 15%</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.hsup15p).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="tothsup15p" t-value="tothsup15p+round(line.hsup15p,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Heure supplémentaire 35%</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.hsup35p).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="tothsup35p" t-value="tothsup35p+round(line.hsup35p,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Heure supplémentaire 50%</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.hsup50p).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="tothsup50p" t-value="tothsup50p+round(line.hsup50p,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Heure supplémentaire 60%</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.hsup60p).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="tothsup60p" t-value="tothsup60p+round(line.hsup60p,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Heure supplémentaire 120%</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.hsup120p).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="tothsup120p" t-value="tothsup120p+round(line.hsup120p,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Indeminité de logement</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.logementp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totlogementp" t-value="totlogementp+round(line.logementp,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Indemnité de fonction</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.fonctionp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totfonctionp" t-value="totfonctionp+round(line.fonctionp,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Indemnité de transport</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.transportp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="tottransportp" t-value="tottransportp+round(line.transportp,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Indemnité de caisse</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.caissep).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totcaissep" t-value="totcaissep+round(line.caissep,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Indemnité de salissure</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.salip).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totsalip" t-value="totsalip+round(line.salip,0)"/>
+          					   </t>
+                            </tr>
+                            <tr class="gris">
+                               <td><strong>Total brut</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.brutp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totbrutp" t-value="totbrutp+round(line.brutp,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Assurance vielliesse</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.avielp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totavielp" t-value="totavielp+round(line.avielp,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>IUTS</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.iutsp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totiutsp" t-value="totiutsp+round(line.iutsp,0)"/>
+          					   </t>
+                            </tr>
+                            <tr  class="gris">
+                               <td><strong>Total cotisation Employé</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.avielp+line.iutsp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Cotisation patronale</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.chargepatp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totchargepatp" t-value="totchargepatp+round(line.chargepatp,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Avance</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.avp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totavp" t-value="totavp+round(line.avp,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Prêt</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.pretp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totpretp" t-value="totpretp+round(line.pretp,0)"/>
+          					   </t>
+                            </tr>
+                            <tr>
+                               <td><strong>Base imposable IUTS</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.biutsp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totbiutsp" t-value="totbiutsp+round(line.biutsp,0)"/>
+          					   </t>
+                            </tr>
+                            <tr class="gris">
+                               <td><strong>Net à payer</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.salnetp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totsalnetp" t-value="totsalnetp+round(line.salnetp,0)"/>
+          					   </t>
+                            </tr>
+                            <tr  class="gris">
+                               <td><strong>Coût total</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [1,2,3,4,5,6]).sorted(key=lambda line: line.employee_id.ordre)" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.couttotp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totcouttotp" t-value="totcouttotp+round(line.couttotp,0)"/>
+          					   </t>
+                            </tr>
+                    </table>
+                </div>
+                </div>
+<p style="page-break-before:always;"> </p>
+                <div class="page">
+                    <div>
+                    	<div class="infosgr">
+                    <img t-att-src="'/paie/static/src/img/logolivre.png'" />
+                    	</div> 
+						<div class="infosdr">
+                           <h1>LIVRE DE PAIE</h1><br/>
+                           Période: <strong><span t-esc="o.name"/></strong><br/>
+                           Du: <strong><span t-esc="o.date_start" t-esc-options='{"widget": "date"}'/></strong> Au: <strong><span t-esc="o.date_end" t-esc-options='{"widget": "date"}'/></strong><br/>
+                    	</div>
+                    </div>
+                <div class="rubriques">
+                    <table class="trub" width="100%">
+                            <tr>
+                               <td align="center" class="rub"><strong>Rubrique</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="center" class="emp">
+                                  <strong><span t-esc="line.employee_id.ordre"/></strong><br/>
+                                  <strong><span t-esc="line.employee_id.name"/></strong>
+                                 </td>
+          					   </t>
+          					   <td class="grisc"><strong>Total</strong></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Salaire de base</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.sbasep).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totsbasep" t-value="totsbasep+round(line.sbasep,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totsbasep).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Ancienneté</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.ancp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totancp" t-value="totancp+round(line.ancp,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totancp).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Sursalaire</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.sursalp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totsursalp" t-value="totsursalp+round(line.sursalp,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totsursalp).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Heure supplémentaire 15%</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.hsup15p).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="tothsup15p" t-value="tothsup15p+round(line.hsup15p,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(tothsup15p).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Heure supplémentaire 35%</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.hsup35p).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="tothsup35p" t-value="tothsup35p+round(line.hsup35p,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(tothsup35p).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Heure supplémentaire 50%</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.hsup50p).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="tothsup50p" t-value="tothsup50p+round(line.hsup50p,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(tothsup50p).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Heure supplémentaire 60%</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.hsup60p).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="tothsup60p" t-value="tothsup60p+round(line.hsup60p,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(tothsup60p).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Heure supplémentaire 120%</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.hsup120p).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="tothsup120p" t-value="tothsup120p+round(line.hsup120p,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(tothsup120p).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Indeminité de logement</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.logementp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totlogementp" t-value="totlogementp+round(line.logementp,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totlogementp).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Indemnité de fonction</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.fonctionp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totfonctionp" t-value="totfonctionp+round(line.fonctionp,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totfonctionp).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Indemnité de transport</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.transportp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="tottransportp" t-value="tottransportp+round(line.transportp,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(tottransportp).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Indemnité de caisse</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.caissep).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totcaissep" t-value="totcaissep+round(line.caissep,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totcaissep).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Indemnité de salissure</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.salip).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totsalip" t-value="totsalip+round(line.salip,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totsalip).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr class="gris">
+                               <td><strong>Total brut</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.brutp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totbrutp" t-value="totbrutp+round(line.brutp,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totbrutp).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Assurance vielliesse</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.avielp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totavielp" t-value="totavielp+round(line.avielp,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totavielp).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>IUTS</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.iutsp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totiutsp" t-value="totiutsp+round(line.iutsp,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totiutsp).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr  class="gris">
+                               <td><strong>Total cotisation Employé</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.avielp+line.iutsp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totiutsp+totavielp).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Cotisation patronale</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.chargepatp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totchargepatp" t-value="totchargepatp+round(line.chargepatp,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totchargepatp).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Avance</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.avp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totavp" t-value="totavp+round(line.avp,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totavp).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                               <td><strong>Prêt</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.pretp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totpretp" t-value="totpretp+round(line.pretp,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totpretp).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+
+                            <tr>
+                               <td><strong>Base imposable IUTS</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.biutsp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totbiutsp" t-value="totbiutsp+round(line.biutsp,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totbiutsp).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr class="gris">
+                               <td><strong>Net à payer</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.salnetp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totsalnetp" t-value="totsalnetp+round(line.salnetp,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totsalnetp).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr  class="gris">
+                               <td><strong>Coût total</strong></td>
+                               <t t-foreach="o.slip_ids.filtered(lambda line: line.salnetp!=0 and line.employee_id.ordre in [7,8,9,10,11]).sorted(key=lambda line: int(line.employee_id.ordre))" t-as="line">
+                                 <td align="right">
+                                  <span t-esc="'{:,.0f}'.format(line.couttotp).replace(',', ' ').replace('.', ',')"/>
+                                 </td>
+                <t t-set="totcouttotp" t-value="totcouttotp+round(line.couttotp,0)"/>
+          					   </t>
+          					   <td class="grisc"><span t-esc="'{:,.0f}'.format(totcouttotp).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                    </table>
+                </div>
+                </div>
+          </t>
+        </t>
+    </t>
+</template>
+</odoo>

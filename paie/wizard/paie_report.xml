@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cnss_report" model="ir.actions.report">
+        <field name="name">CNSS</field>
+        <field name="model">cnss.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">paie.report_cnss</field>
+		<!--<field name="paperformat">paie.paysage</field>-->
+    </record>
+</odoo>

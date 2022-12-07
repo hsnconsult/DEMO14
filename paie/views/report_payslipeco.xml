@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/rhextend/static/src/css/rhextend.css"/>
+		</xpath>
+</template>
+<template id="report_payslipeco">
+    <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="30"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.basic_layout">
+                <div class="page">
+
+                    <h3 align="center"><strong>BULLETIN DE PAYE</strong></h3>
+                    <table class="table table-condensed table-bordered postet apent">
+                        <tr>
+                            <td><strong>Nom et Prénoms</strong></td>
+                            <td><span class="poste" t-field="o.employee_id"/></td>
+                            <td><strong>Qualification</strong></td>
+                            <td><span t-field="o.contract_id.job_id"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Adresse</strong></td>
+                            <td colspan="3">
+                                <div t-field="o.employee_id.address_home_id"
+                                    t-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": True, "phone_icons": True}'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Organisme Social</strong></td>
+                            <td><span>CNSS</span></td>
+                            <td><strong>Numero CNSS</strong></td>
+                            <td><span t-field="o.employee_id.identification_id"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Date d'embauche</strong></td>
+                            <td><span t-field="o.contract_id.date_start"/></td>
+                            <td><strong>Catégorie</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Charges familiales</strong></td>
+                            <td><span t-field="o.employee_id.charges"/></td>
+                            <td><strong>Ancienneté en jours</strong></td>
+                            <td><span t-field="o.contract_id.anciennete"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Période du</strong></td>
+                            <td><span t-field="o.date_from"/></td>
+                            <td><strong>Au</strong></td>
+                            <td><span t-field="o.date_to"/></td>
+                        </tr>
+                    </table>
+
+                    <table class="table table-condensed table-bordered ap" cellpadding="0" cellspacing="0">
+                        <thead class="titrecol">
+                            <tr>
+                                <th>Libellé</th>
+                                <th></th>
+                                <th>Retenues salariales</th>
+                                <th align="right">Gains</th>
+                            </tr>
+                        </thead>
+                        <tbody class="poste">
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code =='SBASE')" t-as="line">
+                                <td><strong><span t-field="line.name"/></strong></td>
+                                <td></td>
+                                <td></td>
+                                <td align="right"><strong><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></strong></td>
+                            </tr>
+                            <tr><td><strong>Indemnités</strong></td><td></td><td></td><td></td></tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code in ('ILOG','ITRANS','IFONC','IANC'))" t-as="line">
+                                <td><strong>--></strong><span t-field="line.name"/></td>
+                                <td></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code in ('AVN','PE'))" t-as="line">
+                                <td><span t-field="line.name"/></td>
+                                <td></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code == 'SBRUT')" t-as="line">
+                                <td><strong><span t-field="line.name"/></strong></td>
+                                <td></td>
+                                <td></td>
+                                <td align="right"><strong><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></strong></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code=='CNSS')" t-as="line">
+                                <td><span t-field="line.name"/></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code=='NIUTS')" t-as="line">
+                                <td><span t-field="line.name"/></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code=='REMB')" t-as="line">
+                                <td><span t-field="line.name"/></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code in ('TOTRET'))" t-as="line">
+                                <td><strong><span t-field="line.name"/></strong></td>
+                                <td></td>
+                                <td align="right"><strong><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></strong></td>
+                                <td></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code == 'NETPRET')" t-as="line">
+                                <td colspan="3" align="right" style="color:#FF0000"><strong><span t-field="line.name"/></strong></td>
+                                <td align="right" style="color:#FF0000"><strong><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                   <div style="width:40%; display:inline-table;">
+                    <table class="table table-condensed table-bordered poste">
+                        <tr>
+                            <td width="60%">Date de règlement</td>
+                            <td><span t-field="o.payslip_run_id.datereg"/></td>
+                        </tr>
+                       <tr>
+                            <td>Mode de règlement</td>
+                            <td>Virement</td>
+                        </tr>
+                    </table>
+                   </div>
+                   <div style="width:50%; display:inline-table; float:right" class="poste">
+                    SIGNATURE ET CACHET DE L'EMPLOYEUR
+                   </div>
+                </div>
+        </t>
+        </t>
+    </t>
+</template>
+</odoo>

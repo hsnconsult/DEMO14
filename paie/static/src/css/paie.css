@@ -1,0 +1,730 @@
+
+/* CSS Document */
+  .tbord tr td{
+    border: 1px solid #ccc;
+    border-right: 1px solid #000;
+    border-left: 1px solid #000;
+    padding:7px;
+    line-height:20px;
+    
+  }
+  .tbordc td{
+    border: 1px solid #000;
+	line-height:18px;
+    
+  }
+  .tborde tr td{
+    border: 1px solid #000;
+    font-size: 16px;
+    text-align:center;
+line-height:20px;
+  }
+  .tborde tr th{
+    border: 1px solid #000;
+font-size: 14px;
+text-align:center;
+font-weight:bold;
+background-color:#CCCCCC;
+padding:5px;
+line-height:20px;
+vertical-align:center;
+  }
+  .tbord th{
+    border: 1px solid #000;
+    text-align:center;
+    vertical-align:center;
+    background-color:#CCCCCC;
+  }
+  .tbordc th{
+	  
+    border: 1px solid #000;
+    text-align:center;
+    vertical-align:center;
+    background-color:#CCCCCC;
+  }
+.titreval td {
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #fff;
+    font-family:Arial;
+    font-size:16px;
+}
+.titrevallp td {
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #fff;
+    font-family:Arial;
+    font-size:10px;
+}
+.total {
+    background-color:#EEEEEE;
+    font-weight:bold;
+}
+  .titre{
+    font-size:36px;
+    background-color:#AAAAAA;
+    color:#FFFFFF;
+    font-family:arial;
+    text-align:center;
+    font-weight:bold;
+  }
+  .soustitre{
+    font-size:22px;
+    font-family:cambria;
+    font-weight:bold;
+    font-style:italic;
+  }
+  .titrecol{
+    font-size:16px;
+    background-color:#EAEAEA;
+    font-family:Arial;
+    border: 1px solid #000;
+    text-align:center;
+    vertical-align:center;
+    font-weight:bold;
+  }
+    .titrecollp{
+    font-size:8px;
+    background-color:#EAEAEA;
+    font-family:Arial;
+    border: 1px solid #000;
+    text-align:center;
+    vertical-align:center;
+    font-weight:bold;
+  }
+  .titreval{
+    font-size:20px;
+    font-family:cambria;
+    border: 1px solid #000;
+    align:center
+  }
+  .sess{
+    font-size:20px;
+    font-family:cambria;
+    border: 1px solid #000;
+    align:center
+  }
+
+  .signature1{
+    font-size:22px;
+    font-family:cambria;
+    text-align:center;
+    font-weight:bold;
+    float:left;
+  }
+  .signature2{
+    font-size:22px;
+    font-family:cambria;
+    text-align:center;
+    font-weight:bold;
+    float:right;
+  }
+    .signature3{
+    font-size:22px;
+    font-family:cambria;
+    text-align:left;
+    font-weight:bold;
+    float:left;
+	width:50%;
+  }
+  .signature4{
+    font-size:22px;
+    font-family:cambria;
+    text-align:right;
+    font-weight:bold;
+    float:right;
+	width:50%;
+  }
+  .baspage {
+    font-size:14px;
+    font-family:arial;
+    text-align:left;
+    margin-top:5px;
+  }
+  .mention {
+    font-size:14px;
+    font-family:arial;
+    font-weight:bold;
+    margin-top:5px;
+  }
+  .totsession {
+    display: inline-table;
+    vertical-align: top;
+   }
+
+  .infosgr{
+    font-size:15px;
+    font-family:cambria;
+    float:left;
+    width:60%;
+border:1px solid #000;
+   min-height:140px;
+padding-left:10px;
+padding-top:3px;
+  }
+  .infosdr{
+    font-size:15px;
+    font-family:cambria;
+    float:right;
+    width:40%;
+border-top:1px solid #000;
+border-bottom:1px solid #000;
+border-right:1px solid #000;
+   min-height:140px;
+padding-left:10px;
+padding-top:3px;
+  }
+  .infosgo{
+    font-size:15px;
+    font-family:cambria;
+    float:left;
+    width:60%;
+border:1px solid #000;
+   min-height:170px;
+padding-left:10px;
+padding-top:3px;
+  }
+  .infosdo{
+    font-size:15px;
+    font-family:cambria;
+    float:right;
+    width:40%;
+border-top:1px solid #000;
+border-bottom:1px solid #000;
+border-right:1px solid #000;
+   min-height:170px;
+padding-left:10px;
+padding-top:3px;
+  }
+.gris{
+ background-color:#CCCCCC;
+}
+.grisc{
+ background-color:#EEEEEE;
+  text-align:right;
+font-weight:bold;
+}
+.rub{
+width:33%;
+}
+.emp{
+width:10%;
+}
+.resp{
+text-align:right;
+font-weight:bold;
+font-size:16px;
+float:right;
+}
+.brutw{
+width:11%;
+}
+.netw{
+width:11%;
+background-color:#CCCCCC;
+vertical-align:center;
+font-weight:bold;
+font-size:20px;
+}
+.netp{
+width:11%;
+vertical-align:center;
+font-weight:bold;
+font-size:20px;
+}
+.trub tr td{
+  font-size:12px;
+}
+
+  
+ 
+ .infosclig {
+   width:40%;
+   float:left;
+   font-size:14px;
+   text-align: center;
+   margin-bottom:20px;
+   text-align:left; 
+ }
+ 
+ .RELEVED {
+   width:50%;
+   float:left;
+   font-size:14px;
+   text-align:left;
+   margin-bottom:20px;
+  
+ }
+ 
+ .contenug {
+   float:left;
+   font-size:15px;
+   text-align: center;
+  
+ }
+ .contenud {
+   float:left;
+   font-size:15px;
+   text-align:center;
+ }
+ 
+ .txt {
+   text-align:center;
+ }
+ 
+ .souligner {
+   text-decoration:underline;
+   
+ }
+ 
+ .iu {
+   float:left;
+   font-size:15px;
+   text-align:center;
+   border: 2px solid #000;
+   width: 100%;
+ }
+ 
+ .tic {
+   width:60%;
+   float:left;
+   font-size:14px;
+   text-align:right;
+   margin-bottom:20px;
+   font-style:italic;
+}
+
+ .pi {
+   font-size:14px;
+   width: 100%
+ }
+  
+.RELE {
+   width:60%;
+   float:right;
+   font-size:14px;
+   margin-bottom:20px;
+   text-align:center;
+  
+ }
+ .RELEV {
+   width:60%;
+   float:right;
+   font-size:16px;
+   margin-bottom:20px;
+   text-align:center;
+  
+ }
+ 
+
+.cas {
+   float:left;
+   font-size:20px;
+   text-align: center;
+  }
+  
+  .c1 {
+  width:3%;
+  }
+  .t1 {
+  width:27%;
+  }
+  .t2,.t3,.t4,.t5,.t6,.t7,.t8,.t9,.t10,.t11,.t12,.t13,.t14,.t15 {
+  width:5%;
+  }
+  
+ .c1{
+ width:2%;
+ }
+ .c2{
+ width:33%;
+ }
+ .c3{
+ width:17%;
+ }
+ .c4{
+ width:12%;
+ }
+ .c5{
+ width:7%;
+ }
+ .c6{
+ width:20%;
+ }
+ .c7{
+ width:9%;
+ }
+.entbul{
+ padding-top:40px;
+float:left;
+width:100%
+}
+.entg{
+  float:left;
+  width:45%;
+   border:1px solid #fff;
+   text-align:center;
+  /*min-height:100px;*/
+padding-top:30px;
+}
+.entd{
+  float:right;
+  width:50%;
+}
+.titrebul{
+ font-size:40px;
+  font-weight:bold;
+   padding-left:100px;
+}
+.infobul{
+  width:100%;
+float:left;
+}
+  .infosg {
+   width:30%;
+   float:left; 
+   line-height:25px;
+   font-size:14px;
+   }
+  .infosd {
+   width:65%;
+   float:right; 
+   border:1px solid #000;
+    line-height: 30px;
+   margin-bottom: 5px;
+   font-size:18px;
+   padding-left:20px;
+   padding-top:10px;
+  min-height:220px;
+   }
+.bastitre{
+  text-align:center;
+  padding-left:110px;
+}
+.perpaie tr td{
+border:1px solid #fff;
+line-height:15px;
+text-align:left;
+font-size:14px;
+}
+
+  .tbord tr:last-child td{
+  height:300px;
+border-bottom:1px solid #000;
+    
+  }
+  
+.titrecolbas{
+    font-size:12px;
+    background-color:#EAEAEA;
+    font-family:Arial;
+    border: 1px solid #000;
+    text-align:center;
+    vertical-align:center;
+    font-weight:bold;
+  }
+  .tbordlp tr td{
+    line-height:20px;
+   font-size:9px;
+    
+  }
+  .tbordlp th{
+    border: 1px solid #000;
+    text-align:center;
+    vertical-align:center;
+    background-color:#CCCCCC;
+  }
+
+.titrevaliuts td {
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #fff;
+    font-family:Arial;
+    font-size:12px;
+}
+
+/* css complement */
+.traitplein{
+  border-bottom:3px solid #000;
+  width:50%;
+  text-align:center;
+  margin-left:70px;
+}
+.haut{
+width:100%;
+float:left;
+font-family: sans-serif;
+font-size:14px;
+line-height:25px;
+ }
+.hautgauche{
+width:25%;
+float:left;
+text-align:center;
+}
+.hautdroite{
+width:50%;
+float:right;
+}
+.titrepaie{
+    width:100%;
+    float:left;
+    border:2px solid #000;
+    font-family:"Times New Roman";
+    font-size:20px;
+    text-align:center;
+    margin-top:5px;
+    font-weight:bold;
+     }
+.tableau{
+    width:100%;
+    float:left;
+    border:2px solid #000;
+    margin-bottom: 10px;
+     }
+     .tableau table {font-family: sans-serif;
+  border-collapse: collapse;width: 100%;
+}
+     .tableau tr td {padding: 3px;
+ border:1px solid black;border-right: 3px solid black;
+ font-size:12px;
+ text-align:center;
+}
+.tableau tr th {padding: 3px;
+border:1px solid black;border-right: 3px solid black;
+text-align:center;
+font-size:12px;
+}
+
+.tableau2{
+    width:100%;
+    float:left;
+    border:2px solid #000;
+    margin-bottom: 10px;
+     }
+     .tableau2 table {font-family: sans-serif;
+  border-collapse: collapse;width: 100%;
+}
+     .tableau2 tr td {padding: 3px; border-right: 3px solid black;
+ font-size:12px;
+ text-align:center;
+padding:2px;
+}
+.tableau2 tr th { border-right: 3px solid black; border-bottom: 1px solid black;
+text-align:center;
+font-size:12px;
+}
+
+}.hautgaucheburkina{
+    font-size:15px;
+}.hautgaucheministere{
+    font-size:15px;
+}
+.hautgauchefinance{
+    font-size:15px;
+}
+.hautgauchedirection{
+    font-size:15px;
+}
+
+
+.hautdroitereleve{
+    font-size: 18px; font-family: serif;
+}.hautdroiteretenues{
+    font-size: 14px;
+}.hautdroitetpa{
+    font-size: 14px; margin-top: -9px
+}
+.hautdroiteiuts{
+    font-size: 14px; margin-top: -9px; margin-left: 15px;
+}
+.titresous{
+    font-weight: normal; font-family: sans-serif; font-size: 14px
+}.titreperiode{
+    font-family: sans-serif; font-size: 16px
+}.tableau.td0{
+    border-left: 0px ;border-right: 1px solid black;
+}.tableau.tdex{
+    border-right: 1px solid black;
+}.titreimpot{
+    margin-bottom: 5px; font-size: 20px; font-family: serif; font-weight: bold;text-align:center;
+}
+.tableau.tdmeme{
+    border-right: 0px;
+}
+.tableau2.tdmeme{
+    border-right: 0px;
+}
+/* css pour landscape */
+.landscapehautgauche {
+ 
+    float: left; width: 25%;font-size: 14px; font-weight: bold; font-family: sans-serif;margin-top: 15px;
+}
+.landscapehautgauchedate1 {
+    word-spacing: 25px;
+}.landscapehautgauchedate2 {
+    word-spacing: 25px;margin-bottom: -25px;
+}.landscapehautmilieu {
+    float: left;width: 50%; text-align: center; font-size: 18px; font-weight: bold; font-family: sans-serif;
+}.landscapehautdroite {
+    float: left;width: 25%;font-size: 16px; font-weight: bold; font-family: sans-serif;
+}
+.landscapehautdroitefolio {
+    margin-left: 50px; margin-bottom: 10px; margin-top: 5px;
+}
+.landscapehautdroitenumero {
+    float: left;
+}
+.landscapehautdroitecases {
+    float: left;
+}
+.landscapehautdroitecase_vide {
+    float: left; margin-left: 10px; border:1px solid black; width: 40px;height: 20px;border-top: 0px;
+}
+.landscapehautdroitecase_chiffre {
+    float: left; margin-left: 10px; border:1px solid black; width: 100px;height: 20px;border-top: 0px;text-align: right;
+}
+.landscapehautdroitecase_lettre {
+    float: left; margin-left: 10px; border:1px solid black; width: 20px;height: 20px;border-top: 0px;text-align: center;
+}
+.landscapehaut .break{
+    clear: left;
+}
+.tableau_landscapedates {
+    float: left; word-spacing: 15px;
+}
+.tableau_landscape table {font-family: sans-serif; font-size: 13px; font-weight: bolder;
+    border-collapse: collapse;width: 100%;
+  }
+  .tableau_landscape {margin-top: 10px;
+  }    
+  .tableau_landscape tr td {
+   border:1px solid black;
+   line-height:18px;
+   font-size:12px;
+  }
+  .tableau_landscape tr th {
+  border:1px solid black;margin-top: 0px;padding-top: 0px;
+  text-align:center;
+  }
+
+.contenuiuts {
+ margin-top:1px;
+ width:100%;
+}
+
+.contenuiuts  tr td{
+  border:1px solid #000;
+  line-height:30px;
+  padding:2px;
+}
+.num{
+width:3%;
+}
+.np{
+width:26%;
+}
+.sii{
+width:13%;
+}
+.aei{
+width:13%;
+}
+.ani{
+width:13;
+}
+.ti{
+width:13%;
+}
+.tc{
+width:7%;
+}
+.idu{
+width:12%;
+}
+.cnsstab tr td {
+ border:1px solid #ccc;
+  font-weight:normal;
+  padding:2px;
+}
+.cnsstab tr td.sanstrait{
+border:1px solid #fff;
+}
+.cnsstab tr td.sanstrait2{
+border-left:1px solid #fff;
+border-bottom:1px solid #fff;
+
+}
+
+.cnsignature1{
+margin-top:10px;
+float:left;
+width:40%;
+text-align:center;
+font-family:Arial, Helvetica, sans-serif;
+font-size:14px;
+font-weight:bold;
+}
+.cnsignature2{
+margin-top:10px;
+float:right;
+width:40%;
+text-align:center;
+font-family:Arial, Helvetica, sans-serif;
+font-size:14px;
+font-weight:bold;
+}
+.datecnss{
+ text-align:center;
+margin-top:5px;
+font-weight:bold;
+}
+.tbordv{
+width:90%;
+}
+  .tbordv tr td{
+    border: 1px solid #ccc;
+    border-right: 1px solid #000;
+    border-left: 1px solid #000;
+    padding-left:7px;
+    line-height:20px;
+    font-size:16;
+  }
+  .tbordv tr th{
+    border: 1px solid #000;
+    padding-left:7px;
+    line-height:20px;
+  }
+  .tbordv tr:last-child td {
+    border: 1px solid #000;
+    padding-left:7px;
+    line-height:20px;
+    border-top: 1px solid# 000
+  }
+.titrev{
+  background-color:#E9E9E9;
+  width:90%;
+  font-size:20px;
+  font-weight:bold;
+  text-align:center;
+}
+.signdrh{
+  float:left;
+  width:33%;
+  text-align:center;
+}
+.signdfc{
+  float:left;
+  width:33%;
+  text-align:center;
+}
+.signdg{
+  float:left;
+  width:33%;
+  text-align:center;
+}
+.titrest{
+  font-size:22px;
+  font-weight:bold;
+}
+.nomemp{
+  font-size:22px;
+  font-weight:bold;
+}

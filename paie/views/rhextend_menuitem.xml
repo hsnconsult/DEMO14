@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>      
+	<!-- Menu  Etats -->   
+    <menuitem id="menu_rhextend_etat_iuts" name="Etats IUTS " parent = "hr_payroll.menu_hr_payroll_root" action="action_rhe_iuts_report" groups="hr_payroll.group_hr_payroll_user"/>
+    <menuitem id="menu_rhextend_etat_cnss" name="Etats CNSS " parent = "hr_payroll.menu_hr_payroll_root" action="action_rhe_cnss_report" groups="hr_payroll.group_hr_payroll_user"/>
+    <menuitem id="menu_rhextend_etat_rubsal" name="Salaires par rubrique " parent = "hr_payroll.menu_hr_payroll_root" action="action_rhe_rubsal_report" groups="hr_payroll.group_hr_payroll_user"/>
+    <menuitem id="menu_rhextend_etat_virement" name="Ordre de virement " parent = "hr_payroll.menu_hr_payroll_root" action="action_rhe_virement_report" groups="hr_payroll.group_hr_payroll_user"/>
+	 </data>
+</openerp>

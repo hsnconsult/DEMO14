@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/rhextend/static/src/css/rhextend.css"/>
+		</xpath>
+</template>
+
+<template id="report_iuts">
+    <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="12"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <img t-att-src="'/rhextend/static/src/img/logo.png'" />
+                    <p><div align="center" class="titre">ETAT ANNEXE DE LA DECLARATION DE VERSEMENT ET DE LA RETENUE IUTS-TPA <span t-esc="data['form']['lot_id'][1]"/> </div></p>
+						<table class="table table-bordered">
+                          <thead class="titrecoli">
+  							<tr>
+							    <td>N° d'ordre</td>
+							    <td>Noms et prénoms des salariés</td>
+							    <td>Salaires bruts</td>
+							    <td>Bases imposables</td>
+							    <td>Nombre de charges</td>
+							    <td>IUTS dû</td>
+							</tr>
+                          </thead>
+                         <tbody class="postei table-line">
+                          <t t-foreach="ilines" t-as="iline">
+                            <tr>
+                                <td width="10%"><span t-esc="iline['numordre']"/></td>
+                                <td width="30%"><span t-esc="iline['nom']"/></td>
+                                <td align="right" width="15%"><span t-esc="'{:,.0f}'.format(iline['salbrut']).replace(',', ' ').replace('.', ',')"/></td>
+                                <td align="right" width="15%"><span t-esc="'{:,.0f}'.format(iline['bi']).replace(',', ' ').replace('.', ',')"/></td>
+                                <td align="center" width="15%"><span t-esc="iline['charges']"/></td>
+                                <td align="right" width="15%"><span t-esc="'{:,.0f}'.format(iline['iuts']).replace(',', ' ').replace('.', ',')"/></td>
+							</tr>
+                          </t>
+                         </tbody>
+						</table>
+
+                </div>
+
+        </t>
+    </t>
+</template>
+</data>
+</odoo>

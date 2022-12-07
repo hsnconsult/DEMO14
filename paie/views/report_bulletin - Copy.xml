@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/paie/static/src/css/paie.css"/>
+		</xpath>
+</template>
+<template id="report_bulletin">
+    <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="2"/>
+        <t t-set="data_report_header_spacing" t-value="0"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <img t-att-src="'/paie/static/src/img/logo.png'" />
+                    <h2 class="titre">BULLETIN DE PAIE</h2>
+                    <div>
+                    	<div class="infosg">
+                           <strong>Période du</strong> <span t-field="o.date_from"/> <strong>au</strong> <span t-field="o.date_to"/><br/>
+                           <strong>Paiement le</strong> <span t-field="o.payslip_run_id.date_end"/> <strong>par</strong> <span t-field="o.modep"/><br/>
+                           <strong>Emploi:</strong> <span t-field="o.employee_id.job_id"/> <strong>/ Département:</strong> <span t-field="o.employee_id.department_id"/><br/>
+                           <strong>Taux d'abattement:</strong> <span t-field="o.struct_id.tauxa"/><br/>
+                           <strong>N° Séc.Soc:</strong> <span t-field="o.employee_id.secsoc"/><br/>
+                           <strong>Ancienneté:</strong> <span t-field="o.ancannee"/> an(s) et <span t-field="o.ancmois"/> mois / <strong>Nbre d'enfants:</strong> <span t-field="o.employee_id.children"/>
+                    	</div>
+						<div class="infosd">
+                           <strong>Matricule: <span t-field="o.employee_id.identification_id"/></strong><br/>
+                           <strong><span t-field="o.employee_id.title.name"/> <span t-field="o.employee_id.name"/></strong><br/>
+                           <strong>Catégorie:</strong> <span t-field="o.employee_id.categorie"/> <strong>Echelon</strong> <span t-field="o.employee_id.echelon"/> <br/>
+                           <span t-field="o.employee_id.work_location"/>
+                    	</div>
+                    </div>
+                    <table class="tbord" width="100%" style="margin-top:15px">
+                            <tr>
+                                <th rowspan="2">N°</th>
+                                <th rowspan="2">Désignation</th>
+                                <th rowspan="2">Nombre</th>
+                                <th rowspan="2">Base</th>
+                                <th colspan="3">Part salariale</th>
+                                <th colspan="2">Part patronale</th>
+                            </tr>
+                            <tr class="titrecol">
+                                <th>Taux</th>
+                                <th>Gain</th>
+                                <th>Retenue</th>
+                                <th>Taux</th>
+                                <th>Retenue</th>
+                            </tr>
+                        <tbody class="titreval">
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.salary_rule_id.ref and int(line.salary_rule_id.ref) in range (1000,1999)).sorted(key=lambda line: line.salary_rule_id.ref)" t-as="line">
+                                <td><span t-field="line.salary_rule_id.ref"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td align="right"><t t-if="line.salary_rule_id.ref != '106'"><span t-esc="'{:,.0f}'.format(line.quantity).replace(',', ' ').replace('.', ',')"/></t></td>
+                                <td align="right"><t t-if="line.salary_rule_id.ref != '106'"><span t-esc="'{:,.2f}'.format(line.amount).replace(',', ' ').replace('.', ',')"/></t></td>
+                                <td align="right"><t t-if="line.salary_rule_id.ref != '106'"><span t-esc="'{:,.2f}'.format(line.rate).replace(',', ' ').replace('.', ',')"/></t></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code in ('TOTBRUT'))" t-as="line">
+                                <td class="total"></td>
+                                <td class="total" align="center">Total Brut</td>
+                                <td class="total"></td>
+                                <td class="total"></td>
+                                <td class="total"></td>
+                                <td class="total" align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                <td class="total"></td>
+                                <td class="total"></td>
+                                <td class="total"></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code in ('AVIEL') and line.total != 0)" t-as="line">
+                                <td><span t-field="line.salary_rule_id.ref"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td align="right"></td>
+                                <td align="right"><span t-esc="'{:,.2f}'.format(line.amount).replace(',', ' ').replace('.', ',')"/></td>
+                                <td align="right"><span t-esc="'{:,.2f}'.format(line.rate).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                <td align="right"><span t-esc="'{:,.2f}'.format(21.5-line.rate).replace(',', ' ').replace('.', ',')"/></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total*16/5.5).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code in ('TPA') and line.total != 0)" t-as="line">
+                                <td><span t-field="line.salary_rule_id.ref"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.2f}'.format(line.amount).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.2f}'.format(line.rate).replace(',', ' ').replace('.', ',')"/></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr>
+                                <td class="total"></td>
+                                <td class="total" align="center">Total Cotisations</td>
+                                <td class="total"></td>
+                                <td class="total"></td>
+                                <td class="total"></td>
+                                <td class="total"></td>
+                                <t t-foreach="o.line_ids.filtered(lambda line: line.code in ('CHARGESAL'))" t-as="line">
+                                  <td class="total" align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                </t>
+                                <td class="total"></td>
+                                <t t-foreach="o.line_ids.filtered(lambda line: line.code == 'COTPAT')" t-as="line">
+                                  <td class="total" align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                </t>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code == 'BIUTS')" t-as="line">
+                                <td><span t-field="line.salary_rule_id.ref"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code == 'BIUTSC')" t-as="line">
+                                <td><span t-field="line.salary_rule_id.ref"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code in ('IUTS') and line.total != 0)" t-as="line">
+                                <td><span t-field="line.salary_rule_id.ref"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code in ('RETMUT') and line.total != 0)" t-as="line">
+                                <td><span t-field="line.salary_rule_id.ref"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code in ('PRETS') and line.total != 0)" t-as="line">
+                                <td><span t-field="line.salary_rule_id.ref"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr t-foreach="o.line_ids.filtered(lambda line: 'AVIELC' in line.code )" t-as="line">
+                                <td><span t-field="line.salary_rule_id.ref"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td align="right"></td>
+                                <td align="right"><span t-esc="'{:,.2f}'.format(line.amount).replace(',', ' ').replace('.', ',')"/></td>
+                                <td align="right"><span t-esc="'{:,.2f}'.format(line.rate).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                <td align="right"><span t-esc="'{:,.2f}'.format(line.rate).replace(',', ' ').replace('.', ',')"/></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code in ('RISKPROC','PREFAC')).sorted(key=lambda line: line.salary_rule_id.ref)" t-as="line">
+                                <td><span t-field="line.salary_rule_id.ref"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td align="right"></td>
+                                <td align="right"><span t-esc="'{:,.2f}'.format(line.amount).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.2f}'.format(line.rate).replace(',', ' ').replace('.', ',')"/></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code == 'IUTSC')" t-as="line">
+                                <td><span t-field="line.salary_rule_id.ref"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.code == 'TPAC')" t-as="line">
+                                <td><span t-field="line.salary_rule_id.ref"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.2f}'.format(line.amount).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.2f}'.format(line.rate).replace(',', ' ').replace('.', ',')"/></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+
+                            <tr t-foreach="o.line_ids.filtered(lambda line: line.salary_rule_id.ref and int(line.salary_rule_id.ref) in range (701,705)).sorted(key=lambda line: line.salary_rule_id.ref)" t-as="line">
+                                <td><span t-field="line.salary_rule_id.ref"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <table class="tborde" width="100%" style="margin-top:20px">
+                     <tr><th>Cumuls</th><th class="brutw">Salaire brut</th><th>Net imposable</th><th>Charges salariales</th><th>Charges patronales</th><th>Heures travaillées</th><th>Heures sup.</th><th>Avantages en nature</th><th class="netw">NET A PAYER</th></tr>
+                     <tr><td>Période</td><td><span t-esc="'{:,.0f}'.format(o.brutp).replace(',', ' ').replace('.', ',')"/></td><td><span t-esc="'{:,.0f}'.format(o.netp).replace(',', ' ').replace('.', ',')"/></td><td><span t-esc="'{:,.0f}'.format(o.chargesalp).replace(',', ' ').replace('.', ',')"/></td><td><span t-esc="'{:,.0f}'.format(o.chargepatp).replace(',', ' ').replace('.', ',')"/></td><td><span t-esc="'{:,.2f}'.format(o.heuretp).replace(',', ' ').replace('.', ',')"/></td><td><span t-esc="'{:,.0f}'.format(o.heuresupp).replace(',', ' ').replace('.', ',')"/></td><td></td><td rowspan="2" class="netp"><t t-foreach="o.line_ids.filtered(lambda line: line.code in ('NETP'))" t-as="line"><span t-esc="'{:,.0f}'.format(line.total).replace(',', ' ').replace('.', ',')"/></t></td></tr>
+                     <tr><td>Année</td><td><span t-esc="'{:,.0f}'.format(o.bruta).replace(',', ' ').replace('.', ',')"/></td><td><span t-esc="'{:,.0f}'.format(o.neta).replace(',', ' ').replace('.', ',')"/></td><td><span t-esc="'{:,.0f}'.format(o.chargesala).replace(',', ' ').replace('.', ',')"/></td><td><span t-esc="'{:,.0f}'.format(o.chargepata).replace(',', ' ').replace('.', ',')"/></td><td><span t-esc="'{:,.2f}'.format(o.heureta).replace(',', ' ').replace('.', ',')"/></td><td><span t-esc="'{:,.0f}'.format(o.heuresupa).replace(',', ' ').replace('.', ',')"/></td><td></td></tr>
+                     </table>
+                    <div class="resp" >Signature du Responsable</div>
+
+                  <div class="mention" >Pour vous aider à faire valoir vos droits, conservez ce bulletin de paie sans limitation de durée</div>
+<template id="external_layout_footer">
+    <div class="footer">
+                  <div class="baspage" >10 BP 516 Ouagadougou 10 Tel. (+226) 25 36 11 33 Cel. (+226) 76 63 45 24 Burkina Faso<br/>
+                               1200 Logements porte 87 Email: infos@meditek-sarl.com  Site: www.meditekbf.com 
+
+                  </div>
+    </div>      
+</template>
+                
+                </div>
+          </t>
+        </t>
+    </t>
+</template>
+</odoo>
