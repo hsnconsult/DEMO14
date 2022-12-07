@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/etatper/static/src/css/etatper.css"/>
+		</xpath>
+</template>
+
+<template id="report_facture">
+    <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="40"/>
+        <t t-set="data_report_margin_left" t-value="12"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+        <t t-foreach="docs" t-as="o"> 
+            <t t-call="web.basic_layout">
+                <div class="page" style="font-family:Arial, Helvetica, sans-serif; margin-top:10px;">
+                    <div class="infosdm">
+                       FACTURE <span t-esc="o.name"/><br/>
+                       Date : <span t-esc="o.invoice_date" t-options="{'widget': 'date'}"/>
+                    </div>
+
+                    <div class="infoscli">
+                       <strong><span t-esc="o.partner_id.name"/></strong><br/>
+                      <span t-esc="o.partner_id.street"/><br/>
+					   <span t-esc="o.partner_id.street2"/><br/>
+                       TEL : <span t-esc="o.partner_id.phone"/><br/>
+						<span t-esc="o.partner_id.email"/><br/>
+						<span t-esc="o.partner_id.vat"/>
+                    </div>
+								<div class="doit">
+					   Doit :
+					</div>
+                    <div class="objet">
+					  <strong>Objet :</strong> <span t-esc="o.objet" style="font-style:italic;"/>
+                    </div>
+                    <table class="tablepro" width="100%" >
+			    		      <t t-set="devise" t-value="o.currency_id.name"/>
+		      <t t-if="devise=='XOF'">
+			 <t t-set="devisecol" t-value="'FCFA'"/>     
+			 <t t-set="deviselet" t-value="'FRANCS CFA'"/>
+		      </t>
+	              <t t-if="devise=='EUR'">
+			 <t t-set="devisecol" t-value="'EURO'"/>     
+			 <t t-set="deviselet" t-value="'EUROS'"/>
+		      </t>
+		      <t t-if="devise=='USD'">
+			 <t t-set="devisecol" t-value="'USD'"/>     
+			 <t t-set="deviselet" t-value="'DOLLAR US'"/>
+		      </t>
+                      <thead>
+                        <tr>						
+                          <th class="design">Désignation</th>
+                          <th class="unite">Unité</th>
+                          <th class="quantite">Quantité</th>
+                          <th class="pu">Prix unitaire (<span t-esc="devisecol"/>)</th>
+                          <th class="montant">Montant HT (<span t-esc="devisecol"/>)</th>
+                        </tr>
+                      </thead>
+					   <t t-foreach="o.invoice_line_ids" t-as="ids">
+                         <t t-if="ids.display_type == 'line_section' or ids.display_type == 'line_note'">
+                          <th colspan="5"><span t-esc="ids.name"/></th>
+                         </t>	
+                         <t t-else="">	
+                        <tr>						  
+                          <td><span t-esc="ids.name"/></td>  
+						  <td><span t-esc="ids.unite"/></td> 
+                          <td align="center"><span t-esc="'{:,.2f}'.format(ids.quantity).replace(',', ' ').replace('.', ',')"/></td>
+                          <td align="right"><span t-field="ids.price_unit"/></td>
+                          <td align="right"><span t-field="ids.price_subtotal"/><!--<span t-esc="'{:,.2f}'.format(ids.price_subtotal).replace(',', ' ').replace('.', ',')"/>--></td>
+                        </tr>
+                         </t>	
+					  </t>			
+					  <t t-set="tva" t-value="0"/>
+					  <t t-set="retenue" t-value="0"/>
+					   <t t-foreach="o.line_ids" t-as="ltaxe"> 	
+					     <t t-if="'18%' in ltaxe.name">
+					      <t t-set="tva" t-value="tva+(ltaxe.amount_currency*-1)"/>	
+					     </t> 
+					     <t t-if="'5%' in ltaxe.name">
+					      <t t-set="retenue" t-value="retenue+ltaxe.amount_currency"/>	
+					     </t> 
+					   </t> 
+			</table>
+			<div class="memebloc"> 
+			<table class="tablepro" width="100%" >
+                        <tr>
+                          <td colspan="4" align="center" class="total recap">Total HT</td>
+                          <td align="right" class="total recapm"><span t-field="o.amount_untaxed"/></td>
+                        </tr>
+                        <tr>
+                          <td colspan="4" align="center" class="total">TVA (18%)</td>
+                          <td align="right" class="total"><span t-esc="tva" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                        </tr>
+                        <tr>
+                          <td colspan="4" align="center" class="total"> Montant TTC</td>
+                           <td align="right" class="total"><span t-esc="o.amount_untaxed+tva" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                        </tr>
+					    <tr>
+						 <td colspan="4" align="center" class="total">Retenue à la source (5%)</td>
+						  <td align="right" class="total"><span t-esc="retenue" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+						</tr>
+						<tr>
+						 <td colspan="4" align="center" class="total">Montant total</td>
+						  <td align="right" class="total"><span t-esc="o.amount_untaxed+tva-retenue" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+						</tr>
+			    	   <t t-set="avance" t-value="sum(l.montant for l in o.ligne_avance) if o.ligne_avance else 0"/>
+			    		<t t-if="avance!=0">
+			    		<tr>
+
+						<td colspan="5" align="left"><strong>Avances déjà perçues</strong></td>
+					</tr>
+			    		<t t-foreach="o.ligne_avance" t-as="a">
+			    		 <tr>
+						<td colspan="4"><span t-esc="a.date" t-options="{'widget': 'date'}"/></td>
+						<td align="right"><span t-esc="'{:,.2f}'.format(a.montant).replace(',', ' ').replace('.', ',')"/></td>
+					 </tr>
+					</t>
+						<tr>
+						 <td colspan="4" align="center" class="total">Montant net à payer</td>
+						  <td align="right" class="total"><span t-esc="o.amount_untaxed+tva-retenue-avance" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+						</tr>
+				      </t>
+                    </table>
+                    <div class="montantlettre">
+Arrêtée la présente facture à la somme de : 
+
+		         <strong><span t-esc="o.company_id.compute_amount_text(o.amount_untaxed+tva-retenue-avance)"/> <span t-esc="deviselet"/> TOUTES TAXES COMPRISES</strong>
+                         <!--<strong><span t-esc="o.currency_id.amount_to_text(o.amount_untaxed+tva-retenue-avance)"/>.</strong>-->
+                    </div>
+<div class="signature">
+Directeur<br/>
+Insoussa MAIGA
+                    </div>
+			    </div>
+                </div>
+        </t>
+        </t>
+    </t>
+</template>
+</odoo>

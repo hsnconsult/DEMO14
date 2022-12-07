@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/etatper/static/src/css/etatper.css"/>
+		</xpath>
+</template>
+
+<template id="report_BL">
+    <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="30"/>
+        <t t-set="data_report_margin_left" t-value="12"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+        <t t-foreach="docs" t-as="o"> 
+            <t t-call="web.basic_layout">
+                <div class="page" style="font-family:Arial, Helvetica, sans-serif; margin-top:10px;">
+                    <div class="infosdm">
+                       Ouagadougou, le <span t-field="o.commitment_date" t-options="{'widget': 'date'}"/> 
+                    </div>
+
+                    <div class="infoscli">
+                       <strong><span t-esc="o.partner_id.name"/></strong><br/>
+                      <span t-esc="o.partner_id.street"/><br/>
+					   <span t-esc="o.partner_id.street2"/><br/>
+                       TEL: <span t-esc="o.partner_id.phone"/><br/>
+						<span t-esc="o.partner_id.email"/><br/>
+						<span t-esc="o.partner_id.vat"/>
+                    </div>
+			                    <div class="doit">
+                      <![CDATA[&Agrave;]]> L'attention de :
+                    </div>
+                    <div class="objet">
+					  <strong>Objet:</strong> <span t-esc="o.objet" style="font-style:italic;"/>
+                    </div>
+                       <t t-set="nblignes" t-value="0"/>
+
+					   <t t-foreach="o.order_line" t-as="lines">
+					     <t t-if="lines.product_uom_qty!=0">
+                                                <t t-set="nblignes" t-value="nblignes+1"/>
+				            </t>
+                                           </t>
+                    <table class="tablepro">
+                      <thead>
+					    <tr>
+						  <th colspan="4">BORDERAU DE LIVRAISON</th>
+						</tr>
+                        <tr><td colspan="4">REF:<span t-field="o.client_order_ref"/></td></tr>
+                        <tr>
+                          <th class="DESCRI">DESCRIPTION</th>
+                          <th class="QUANT">QUANTITE</th>
+                          <th class="OBS">OBSERVATION</th>
+                          <th class="DESCRI">LIVRABLES</th>
+                        </tr>
+                      </thead>
+
+                       <t t-set="index" t-value="0"/>
+					   <t t-foreach="o.order_line" t-as="line">
+                        <t t-if="line.product_uom_qty!=0">
+                        <tr>
+                          <td><span t-esc="line.name"/></td>
+                          <td align="center"><span t-esc="'{:,.0f}'.format(line.product_uom_qty).replace(',', ' ').replace('.', ',')"/></td>
+                          <td align="center"></td>
+                          <t t-if="index==0"><td t-att-rowspan="nblignes"><span t-field="o.livrables"/></td> </t>
+                           <t t-set="index" t-value="index+1"/>
+			 </tr>
+					  </t>
+					  </t>
+                        <tr>
+						
+                          <td colspan="4">Par sa signature, le client confirme que cette commande reçue est complète et en bonne condition</td>
+                        </tr>
+                        <tr>
+                          <td colspan="4">
+						   <div class="dat">
+						  <br/>Date:................../......................./....................       Heure de réception:..................<br/><br/><br/><br/>
+							  Nom:.........................................................................................        Signature:.........................
+						    </div>
+						 </td>
+                        </tr>
+                    </table>
+                    <div class="signature2">
+
+                 Insoussa MAIGA<br/>
+				 Directeur
+                    </div>
+                </div>
+        </t>
+        </t>
+    </t>
+</template>
+</odoo>

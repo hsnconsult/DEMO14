@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/etatper/static/src/css/etatper.css"/>
+		</xpath>
+</template>
+
+<template id="report_proforma">
+    <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="40"/>
+        <t t-set="data_report_margin_left" t-value="30"/>
+        <t t-set="data_report_margin_right" t-value="30"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+        <t t-foreach="docs" t-as="o"> 
+            <t t-call="web.basic_layout">
+                <div class="page" style="font-family:Arial, Helvetica, sans-serif; margin-top:10px;">
+                    <div class="infosdm">
+                       PRO FORMA <span t-esc="o.name"/><br/>
+                       Date : <span t-esc="o.dateeff" t-options="{'widget': 'date'}"/>
+                    </div>
+
+                    <div class="infoscli">
+                       <strong><span t-esc="o.partner_id.name"/></strong><br/>
+                      <span t-esc="o.partner_id.street"/><br/>
+					   <span t-esc="o.partner_id.street2"/><br/>
+                       TEL : <span t-esc="o.partner_id.phone"/><br/>
+						<span t-esc="o.partner_id.email"/><br/>
+						<span t-esc="o.partner_id.vat"/>
+                    </div>
+			                    <div class="doit">
+                       Doit :
+                    </div>
+                    <div class="objet">
+					  <strong>Objet :</strong> <span t-esc="o.objet" style="font-style:italic;"/>
+                    </div>
+                    <table class="tablepro" width="100%">
+		      <t t-set="devise" t-value="o.pricelist_id.currency_id.name"/>
+		      <t t-if="devise=='XOF'">
+			 <t t-set="devisecol" t-value="'FCFA'"/>     
+			 <t t-set="deviselet" t-value="'FRANCS CFA'"/>
+		      </t>
+	              <t t-if="devise=='EUR'">
+			 <t t-set="devisecol" t-value="'EURO'"/>     
+			 <t t-set="deviselet" t-value="'EUROS'"/>
+		      </t>
+		      <t t-if="devise=='USD'">
+			 <t t-set="devisecol" t-value="'USD'"/>     
+			 <t t-set="deviselet" t-value="'DOLLAR US'"/>
+		      </t>
+                      <thead>
+                        <tr>
+                          <th class="design">Désignation</th>
+                          <th class="unite">Unité</th>
+                          <th class="quantite">Quantité</th>
+                          <th class="pu">Prix unitaire (<span t-esc="devisecol"/>)</th>
+                          <th class="montant">Montant HT (<span t-esc="devisecol"/>)</th>
+                        </tr>
+                      </thead>
+                       <t t-foreach="o.order_line" t-as="line">
+                        <t t-if="line.price_subtotal!=0">
+                        <tr>
+                          <td><span t-esc="line.name"/></td>
+                          <td align="center"><span t-esc="line.unite"/></td>
+                          <td align="center"><span t-esc="'{:,.2f}'.format(line.product_uom_qty).replace(',', ' ').replace('.', ',')"/></td>
+                          <td align="right"><span t-esc="'{:,.2f}'.format(line.price_unit).replace(',', ' ').replace('.', ',')"/></td>
+                          <td align="right"><span t-esc="'{:,.2f}'.format(line.price_subtotal).replace(',', ' ').replace('.', ',')"/></td>
+                        </tr>
+                        </t>
+                        </t>
+			    <t t-set="tva" t-value="0"/>
+		            <t t-set="ret" t-value="0"/>
+			    <t t-foreach="o.amount_by_group" t-as="amount_by_group">
+		               <t t-if="'18' in amount_by_group[0]">
+				       <t t-set="tva" t-value="tva+amount_by_group[1]"/>
+			       </t>
+				<t t-if="'5' in amount_by_group[0]">
+				       <t t-set="ret" t-value="ret+amount_by_group[1]"/>
+			       </t>
+			    </t>
+			</table>
+			<div class="memebloc"> 
+			<table class="tablepro" width="100%" >
+                        <tr>
+                          <td colspan="4" align="center" class="total recap">Total HT</td>
+                          <td align="right" class="total recapm"><span t-esc="'{:,.2f}'.format(o.amount_untaxed).replace(',', ' ').replace('.', ',')"/></td>
+                        </tr>
+                        <tr>
+                          <td colspan="4" align="center" class="total">TVA (18%)</td>
+                          <td align="right" class="total"><span t-esc="'{:,.2f}'.format(tva).replace(',', ' ').replace('.', ',')"/></td>
+                        </tr>
+                        <tr>
+                          <td colspan="4" align="center" class="total">Montant TTC</td>
+                          <td align="right" class="total"><span t-esc="'{:,.2f}'.format(o.amount_untaxed+tva).replace(',', ' ').replace('.', ',')"/></td>
+                        </tr>
+                    </table>
+                    <div class="montantlettre">
+Arrêtée la présente pro forma à la somme de : <td><strong><span t-esc="o.company_id.compute_amount_text(o.amount_untaxed+tva)"/> <span t-esc="deviselet"/> TOUTES TAXES COMPRISES</strong></td>
+                    </div>
+                    <div class="signature">
+Directeur<br/>
+Insoussa MAIGA
+                    </div>
+				                 </div>
+                </div>
+        </t>
+        </t>
+    </t>
+</template>
+</odoo>

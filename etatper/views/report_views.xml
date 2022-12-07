@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QWeb Reports -->
+        <report 
+            id="report_pfm"
+            model="sale.order"
+            string="Proforma"
+            report_type="qweb-pdf"
+            name="etatper.report_proforma"
+            file="etatper.report_proforma"
+            />
+        <report 
+            id="report_pfmeng"
+            model="sale.order"
+            string="Proforma Eng"
+            report_type="qweb-pdf"
+            name="etatper.report_proformaeng"
+            file="etatper.report_proformaeng"
+            />
+	    <report 
+            id="report_avance"
+            model="etatper.avance"
+            string="Avance"
+            report_type="qweb-pdf"
+            name="etatper.report_avanceimp"
+            file="etatper.report_avanceimp"
+            />
+			
+		 <!-- QWeb Reports -->
+        <report 
+            id="report_fac"
+            model="account.move"
+            string="Facture"
+            report_type="qweb-pdf"
+            name="etatper.report_facture"
+            file="etatper.report_facture"
+            />
+        <report 
+            id="report_inv"
+            model="account.move"
+            string="Invoice"
+            report_type="qweb-pdf"
+            name="etatper.report_invoice"
+            file="etatper.report_invoice"
+            />			
+		<report 
+            id="report_bord"
+            model="sale.order"
+            string="BL"
+            report_type="qweb-pdf"
+            name="etatper.report_BL"
+            file="etatper.report_BL"
+            />	
+    </data>
+
+</odoo>
